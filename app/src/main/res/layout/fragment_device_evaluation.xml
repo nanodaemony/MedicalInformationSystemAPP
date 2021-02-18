@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="3dp"
+    android:layout_margin="15dp"
+    android:background="@drawable/frame_collection_chip"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/device_evaluation_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="仪器名称"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#009688"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+
+            <!--使用科室-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/collection_evaluation_collection_department"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="使用科室"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <!--使用体验满意度与临床可靠性满意度-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_margin="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="使用体验满意度"
+                        android:textAlignment="center" />
+
+                    <com.wx.wheelview.widget.WheelView
+                        android:id="@+id/device_evaluation_wheel_use_experience_level"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_margin="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="临床可靠性满意度"
+                        android:textAlignment="center" />
+
+                    <com.wx.wheelview.widget.WheelView
+                        android:id="@+id/device_evaluation_wheel_reliable_level"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!--故障情况-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_margin="12dp"
+                android:gravity="center"
+                android:background="@drawable/frame_autofill_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="故障情况"
+                    android:textAlignment="center"
+                    android:textColor="@color/gettingOperationNumber" />
+
+                <RadioGroup
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:text="无故障"
+                        android:checked="true"
+                        android:id="@+id/collection_evaluation_has_error_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RadioButton
+                        android:id="@+id/collection_evaluation_has_error_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="有故障"
+                        />
+
+                </RadioGroup>
+
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/device_evaluation_layout_error_reason"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:text="部件损坏"
+                            android:id="@+id/collection_evaluation_error_component_error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:id="@+id/collection_evaluation_error_software_error"
+                            android:text="软件故障"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:text="操作失误"
+                            android:id="@+id/collection_evaluation_error_operation_error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                        <android.support.v7.widget.AppCompatCheckBox
+                            android:text="环境因素"
+                            android:id="@+id/collection_evaluation_error_environment_error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            android:background="@drawable/frame_autofill_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/collection_evaluation_error_other_error"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="其他"
+                                android:textSize="12sp"
+                                />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+            <!--备注-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/collection_evaluation_remark_info"
+                        android:text="无"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="备注"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+
+                        android:id="@+id/collection_evaluation_record_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="记录人姓名"
+                        android:textSize="12sp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/device_evaluation_button_abandon"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="20dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="放弃仪器数据"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                android:textColor="@color/default_back_stroke_color"
+                android:textSize="20sp"
+                app:icon="@mipmap/delete"
+                app:iconPadding="3dp"
+                app:iconSize="20dp"
+                app:rippleColor="@android:color/white" />
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/device_evaluation_button_commit"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="提交评价"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                android:textColor="@color/default_back_stroke_color"
+                android:textSize="20sp"
+                app:icon="@mipmap/update"
+                app:iconPadding="3dp"
+                app:iconSize="20dp"
+                app:rippleColor="@android:color/white" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</android.support.design.card.MaterialCardView>

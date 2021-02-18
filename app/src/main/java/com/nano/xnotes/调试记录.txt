@@ -1,0 +1,5 @@
+
+1. 如果电脑发给平板发不过去数据,可以先试试ping一下平板
+
+
+2. https://github.com/venshine/WheelView

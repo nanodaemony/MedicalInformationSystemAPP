@@ -1,0 +1,109 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.cz.medicalcollector"
+        minSdkVersion 24
+        targetSdkVersion 27
+        versionCode 1
+        versionName "3.1.6"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/proguard/androidx-annotations.pro'
+        exclude 'META-INF/INDEX.LIST'
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 生成APK失败时
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    // 用于实现OKHttp
+    implementation 'com.squareup.okio:okio:1.14.0'
+    // 用于实现OKHttp
+    // 用于实现JSON字符串转化，属于本地导包
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    // 用于实现类似于苹果的按钮切换
+    implementation files('libs/nineoldandroids-2.4.0.jar')
+    implementation 'com.txusballesteros:FitChart:1.0'
+    implementation 'com.android.support:design:28.0.0'
+    // Navigation View
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    // LitePal数据库
+    // Nice Spinner
+    implementation 'com.github.arcadefire:nice-spinner:1.3.8'
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
+    // FastJson
+    // SmartTable
+    testImplementation 'junit:junit:4.12'
+
+    // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+    //testImplementation 'org.mockito:mockito-core:2.19.0'
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-all
+    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.0.0'
+
+    implementation files('libs/android-logging-log4j-1.0.3.jar')
+    implementation files('libs/log4j-1.2.17.jar')
+    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
+    implementation files('libs/android-logging-log4j-1.0.3.jar')
+    implementation files('libs/gson.jar')
+    implementation files('libs/nineoldandroids-2.4.0.jar')
+    implementation 'org.projectlombok:lombok:1.16.8'
+    // Lombok
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.42.Final'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    //implementation 'io.netty:netty-all:4.1.42.Final'
+    implementation files('libs/android-logging-log4j-1.0.3.jar')
+    implementation files('libs/gson.jar')
+    implementation files('libs/log4j-1.2.17.jar')
+    implementation files('libs/nineoldandroids-2.4.0.jar')
+    // Guava
+    implementation 'com.google.guava:guava:28.1-android'
+
+    implementation 'com.koushikdutta.async:androidasync:2.1.7'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'com.sdsmdg.tastytoast:tastytoast:0.0.2'
+
+    // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
+    implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+
+    implementation 'com.wx.wheelview:wheelview:1.3.3'
+
+}

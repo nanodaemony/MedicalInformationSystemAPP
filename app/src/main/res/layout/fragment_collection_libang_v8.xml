@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/device_card_elevation"
+    android:layout_margin="@dimen/device_card_layout_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--左边的仪器图片以及控制按钮部分 占比1-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.daimajia.swipe.SwipeLayout
+                android:id="@+id/device_collection_swiplayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--侧滑后底部的框-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/device_collection_abandon"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:layout_height="0dp">-->
+<!--                        <ImageView-->
+<!--                            android:layout_width="40dp"-->
+<!--                            android:layout_height="40dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@mipmap/collection_abandon"-->
+<!--                            />-->
+<!--                        <TextView-->
+<!--                            android:text="放弃采集"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"/>-->
+<!--                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/device_collection_stop"
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="0dp">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/collection_stop"
+                            />
+                        <TextView
+                            android:text="停止采集"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/device_collection_start"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="0dp">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/collection_start" />
+                        <TextView
+                            android:text="开始采集"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--仪器图片-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/collection_device_image"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@mipmap/device_libang_elite8" />
+                </LinearLayout>
+
+            </com.daimajia.swipe.SwipeLayout>
+
+        </LinearLayout>
+
+        <!--这是右边部分的信息框 占比5-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="理邦 无创血压(Elite-V8)"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/device_collection_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/wait_to_collect"
+                    android:textColor="@color/titleColor"
+                    android:textSize="@dimen/data_collection_device_status_size"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=" ("
+                    android:textColor="@color/titleColor"
+                    android:textSize="@dimen/data_collection_device_status_size"
+                    />
+
+                <TextView
+                    android:id="@id/collection_receive_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
+                    android:text="接收计数"
+                    android:textColor="@color/titleColor"
+                    android:textSize="@dimen/data_collection_device_status_size"
+                    />
+
+                <View
+                    android:layout_margin="3dp"
+                    android:layout_width="2dp"
+                    android:layout_gravity="center"
+                    android:background="@color/titleColor"
+                    android:layout_height="15dp">
+
+                </View>
+
+                <TextView
+                    android:id="@+id/successful_update_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="3dp"
+                    android:text="上传计数"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/data_collection_device_status_size"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=")"
+                    android:textColor="@color/titleColor"
+                    android:textSize="@dimen/data_collection_device_status_size"
+                    />
+
+            </LinearLayout>
+
+
+            <!--心率HR 脉率PR 呼吸率RR-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--心率HR-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="HR"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_hr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--脉率PR-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="PR"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_pr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--呼吸率RR-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="RR"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_rr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!--SpO2 LAP CVP-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--SPo2-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="SpO2"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_spo2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--LAP-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="LAP"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_lap"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--CVP-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="CVP"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_cvp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--NIBP 与 TEMP参数-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--理邦 TEMP 格式： 130/80-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Temp"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_temp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--\n--\n--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!-- 理邦 NIBP 格式： 130/80-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="NIBP"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_nibp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--\n--\n--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--ART 与 P2P参数-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--理邦 ART 格式： 130/80-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Art"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_art"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--\n--\n--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!-- 理邦P2P 格式： 130/80-->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="P2"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/device_data_li_bang_elitev8_p2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="--\n--\n--"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.design.card.MaterialCardView>

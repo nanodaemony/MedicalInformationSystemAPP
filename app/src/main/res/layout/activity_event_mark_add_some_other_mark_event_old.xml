@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="#CCCCCC" >
+
+        <ImageView
+            android:id="@+id/mark_add_new_mark_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="30dp"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="添加新的标记事件"
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/mark_add_new_mark_delete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:src="@mipmap/delete" />
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_content_box_small_width"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/mark_add_other_mark_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                 >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="标记类型"
+                        android:textSize="12sp" />
+
+                    <RadioGroup
+                        android:id="@+id/mark_add_other_mark_ratio_group_mark_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/mark_add_other_mark_ratio_group_event"
+                            style="@android:style/Widget.Holo.CompoundButton.RadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="事件"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/mark_add_other_mark_ratio_group_operation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="操作"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/mark_add_other_mark_ratio_group_give_medicine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="用药"
+                            android:textSize="12sp" />
+
+                        <RadioButton
+                            android:id="@+id/mark_add_other_mark_ratio_group_give_fluid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="补液/输血"
+                            android:textSize="12sp" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/mark_add_other_mark_event_markName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="请输入标记名称"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <org.angmarch.views.NiceSpinner
+                        android:id="@+id/mark_add_other_mark_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1.5"
+                        android:textAlignment="center" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1.2"
+                        android:background="@drawable/frame_autofill_edittext"
+                        android:padding="10dp">
+
+                        <EditText
+                            android:id="@+id/mark_add_other_mark_give_volume"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="剂量"
+                            android:textSize="12sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:id="@+id/mark_add_other_mark_side_effect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="不良反应/特殊情况"
+                        android:text="无"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <!--时间选择的控件-->
+                <LinearLayout
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp">
+
+                    <ImageView
+                        android:id="@+id/mark_add_other_mark_image_view_change_use_time_method"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/time" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/mark_add_other_mark_text_view_use_current_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="     使用当前时间"
+                            android:textSize="14sp" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_marginStart="10dp"
+                            android:visibility="gone"
+                            android:id="@+id/mark_add_other_mark_input_history_time_box"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <EditText
+                                android:id="@+id/mark_add_other_mark_editText_input_history_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="输入历史时间"
+                                android:text=""
+                                android:textColor="@color/colorBlack"
+                                android:textSize="12sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/mark_add_other_mark_sure_mark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:backgroundTint="@android:color/white"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="确认标记"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16sp"
+        app:cornerRadius="3dp"
+        app:icon="@mipmap/save"
+        app:iconGravity="textStart"
+        app:iconSize="20dp"
+        app:iconTint="@color/colorBlue"
+        app:rippleColor="@android:color/holo_blue_light" />
+
+
+
+</LinearLayout>

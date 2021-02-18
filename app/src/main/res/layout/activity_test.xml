@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.wx.wheelview.widget.WheelView
+        android:id="@+id/test_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:name="com.nano.activity.test.LeftFragment"
+        android:id="@+id/test_left_fragment"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/rightLayout"
+        />
+
+
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/sample1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <!--侧滑后底部的框-->
+        <LinearLayout
+            android:background="#FFFFFF"
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="160dp"
+            android:weightSum="1"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:id="@+id/add_test"
+                android:layout_height="30dp"
+                android:src="@mipmap/add"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:id="@+id/delete_test"
+                android:layout_height="30dp"
+                android:src="@mipmap/delete"
+                />
+
+
+
+            <!--What you want to show-->
+        </LinearLayout>
+        <!-- Bottom View End-->
+
+        <!--主要展示的框-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffff00"
+            android:padding="10dp">
+            <!--What you want to show in SurfaceView-->
+        </LinearLayout>
+        <!-- Surface View End -->
+    </com.daimajia.swipe.SwipeLayout>
+
+
+
+
+
+</LinearLayout>

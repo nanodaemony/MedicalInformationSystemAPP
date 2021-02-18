@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/observe_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#CCCCCC"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/item" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:singleLine="true"
+            android:text="搜索手术名称"
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/choosed_operation_name_imageView_search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/search" />
+
+
+        <EditText
+            android:id="@+id/choosed_operation_name_edit_text_input_key_work"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/frame_content_box_small_width"
+            android:drawablePadding="8dp"
+            android:hint="请输入手术名称关键字"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textSize="14sp"
+            android:visibility="visible"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/choosed_operation_name_imageView_delete_key_word"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="50dp"
+            android:src="@mipmap/delete" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="搜索记录"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <ListView
+                android:id="@+id/choosed_operation_operation_name_search_result"
+                android:layout_width="match_parent"
+                android:background="@drawable/frame_content_box_small_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                >
+
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="已选手术名称: "
+            android:textColor="@color/colorBlue"
+            android:layout_marginStart="30dp"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/choosed_operation_name_text_view_choosed_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlue"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/choosed_operation_operation_name_sure_commit"
+            android:layout_margin="10dp"
+            android:text="确  定"
+            android:padding="10dp"
+            android:background="@drawable/frame_login_button"
+            android:textColor="@android:color/holo_orange_dark"
+            android:layout_width="100dp"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

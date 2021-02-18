@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">监测仪器数据采集系统</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--采集状态-->
+    <string name="wait_to_collect">等待采集</string>
+    <string name="collecting">采集中</string>
+    <string name="waiting_collection">采集未开始</string>
+    <string name="collection_finish">采集完成</string>
+
+
+
+    <!--尚未接收到数据-->
+    <string name="no_data">No data received</string>
+
+
+    <!--各个仪器帮助信息的字符串-->
+    <!--诺和-->
+    <string name="help_info_nuohe_access_way">接入方法:通过网线方式连接采集器，仪器的网口在左侧。当接入网络之后，仪器屏幕下方会显示接入的电脑小图标</string>
+    <string name="help_info_nuohe_other">其他:只有点击仪器屏幕的采集数据按钮，才开始往采集器发送数据</string>
+
+    <!--普可-->
+    <string name="help_info_puke_access_way">接入方法:通过网线方式连接采集器，仪器的网口在仪器背面。当接入网络之后，仪器会显示已经接入</string>
+    <string name="help_info_puke_other">其他:接入之后自动发送数据</string>
+
+    <!--宝莱特-->
+    <string name="help_info_baolaite_access_way">接入方法:</string>
+    <string name="help_info_baolaite_other">其他:</string>
+
+
+
+
+</resources>

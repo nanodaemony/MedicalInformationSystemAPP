@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="#CCCCCC"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/add_some_new_event_mark_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="30dp"
+            android:src="@mipmap/back" />
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="添加新的标记事件"
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:background="@drawable/frame_autofill_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="事件大类"
+                android:textAlignment="center" />
+
+            <com.wx.wheelview.widget.WheelView
+                android:id="@+id/add_some_new_event_mark_wheel_main_type"
+                android:layout_width="130dp"
+                android:layout_height="70dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <!--子类-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/add_some_new_event_mark_sub_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="标记事件子类(如:普通事件/抗生素类等)"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <!--具体事件-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    android:padding="5dp"
+                    android:background="@drawable/frame_autofill_edittext"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/add_some_new_event_mark_concrete_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="标记事件具体内容"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/add_some_new_event_mark_commit"
+        android:layout_gravity="right"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/holo_blue_bright"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="确认提交"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+        android:textColor="@color/default_back_stroke_color"
+        android:textSize="20sp"
+        app:icon="@mipmap/update"
+        app:iconPadding="3dp"
+        app:iconSize="20dp"
+        app:rippleColor="@android:color/white" />
+
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".debug.DrawerLayoutWithTabActivity">
+
+    <!--ifRoom会在toolbar上显示图标如果有空间！ 而showAsAction = never就只显示到三个点的菜单里面-->
+
+    <!--这里可以参考如何加图标的-->
+
+<!--    <item-->
+<!--        android:id="@+id/action_log_info"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="日志信息"-->
+<!--        android:icon="@mipmap/message"-->
+<!--        app:showAsAction="always"-->
+<!--        />-->
+
+<!--    <item-->
+<!--        android:id="@+id/action_change_mark_mode"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="切换标记模式"-->
+<!--        android:icon="@mipmap/swap"-->
+<!--        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/action_maintain"
+        android:orderInCategory="100"
+        android:title="维护"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="100"
+        android:title="设置"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_test"
+        android:orderInCategory="100"
+        android:title="测试"
+        app:showAsAction="never" />
+
+</menu>

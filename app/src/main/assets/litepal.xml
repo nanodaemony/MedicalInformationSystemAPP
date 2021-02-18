@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="MonitorDatabase" />
+
+    <version value="2" />
+
+    <list>
+
+
+    </list>
+
+
+    <!-- 直接设置这个，就表示数据库存储的位置，直接打开手机存储就可以找到 -->
+    <storage value="external"/>
+
+
+
+</litepal>

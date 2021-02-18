@@ -1,0 +1,34 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".debug.DrawerLayoutWithTabActivity">
+
+    <!--ifRoom会在toolbar上显示图标如果有空间！ 而showAsAction = never就只显示到三个点的菜单里面-->
+
+    <item
+        android:id="@+id/observe_menu_back_to_home"
+        android:orderInCategory="100"
+        android:title="主页"
+        android:icon="@mipmap/home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_maintain"
+        android:orderInCategory="100"
+        android:title="维护"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="100"
+        android:title="设置"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_test"
+        android:orderInCategory="100"
+        android:title="测试"
+        app:showAsAction="never" />
+
+</menu>

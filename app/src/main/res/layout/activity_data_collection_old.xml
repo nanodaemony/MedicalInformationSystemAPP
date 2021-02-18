@@ -1,0 +1,3025 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <!--整体布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <!--顶部Toolbar信息-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/collection_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/toolBarColor"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/collection_textView_collection_status"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="尚未开始"
+                android:textSize="15sp" />
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <!--顶部信息框-->
+        <LinearLayout
+            android:id="@+id/linear_layout_message_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <!--手术场次号-->
+            <android.support.design.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                app:cardElevation="0.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="7dp"
+                        android:src="@mipmap/operation_number" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="手术场次号:  "
+                        android:textColor="#259c16"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/collection_operation_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="#259c16"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </android.support.design.card.MaterialCardView>
+
+            <!--成功上传-->
+            <android.support.design.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                app:cardElevation="0.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="7dp"
+                        android:src="@mipmap/update_ok" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="成功上传:  "
+                        android:textColor="#259c16"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/collection_counter_update_success"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#259c16"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <!--失败上传-->
+            <android.support.design.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                app:cardElevation="0.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="7dp"
+                        android:src="@mipmap/update_no" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="失败上传:  "
+                        android:textColor="#13227a"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/collection_counter_update_failed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#13227a"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+            <!--标记上传-->
+            <android.support.design.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_weight="1"
+                android:padding="3dp"
+                app:cardElevation="0.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="7dp"
+                        android:src="@mipmap/mark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="标记上传:  "
+                        android:textColor="#1296db"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/collection_textView_mark_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#1296db" />
+                </LinearLayout>
+
+            </android.support.design.card.MaterialCardView>
+        </LinearLayout>
+
+        <!--仪器数据卡片展示框-->
+        <!--可能需要修改这一部分的高度值来满足界面需求-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="740dp"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--诺和展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_nuoHe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_nuohe_nw9002s" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="诺和 麻醉深度多参数监护仪(NW-9002S)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--诺和SQI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="SQI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_nuohe_sqi"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--诺和CSI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="CSI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_nuohe_csi"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--诺和EMG-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="EMG"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_nuohe_emg"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--诺和BS-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="BS"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_nuohe_bs"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <!--这里是诺和曲线部分
+                        曲线部分为EMG
+                        -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_nuo_he"
+                                android:layout_width="match_parent"
+                                android:layout_height="130dp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--宝莱特A8展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_baolaite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_baolaite"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_baolaite_a8" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="宝莱特 重症插件式监护仪(A8)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_baolaite"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+                                <!--心率、脉搏、温度部分-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--HR-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="HR"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_hr"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--PR-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="PR"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_pr"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <!--血压 无创 有创-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--IBP-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="IBP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_ibp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="3"
+                                            android:gravity="center"
+                                            android:text="--/-- (--)"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+
+                                    <!--Temp-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Temp"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_temp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <!--血压 无创 有创-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--NIBP-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="NIBP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_nibp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="3"
+                                            android:gravity="center"
+                                            android:text="--/-- (--)"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--SPO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="SpO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_baolaite_spo2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <!--这里是宝莱特曲线部分：曲线为HR、SpO2信息-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <!--HR-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_baolaite_hr"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+                                <!--SpO2-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_baolaite_spo2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <!--P1-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_baolaite_ibp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--宜安8700A展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_yian_8700a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_yian_8700a"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_yian_8700a" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="宜安 麻醉机(Aeon8700A)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_yian_8700a"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+                                <!--Pressure部分-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--宜安Pressure——PEAK-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="PEAK"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_peak"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--宜安Pressure——MEAN-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="MEAN"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_pmean"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--宜安PEEP-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="PEEP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_peep"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <!--Volume部分-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--MV-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="MV"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_mv"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--Vt-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Vte"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_vte"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--宜安Freq-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Freq"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_freq"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <!--其他部分-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--FiO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="FiO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_fio2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--etCO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="etCO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_etcCO2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--宜安FiCO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="FiCO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_fico2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                                <!--左边部分-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--AIR-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="AIR"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_pr"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--N2O-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="N2O"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_n2o"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--宜安O2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="O2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_yian_8700a_o2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--普可展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_puke"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_puke"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_puke_yy106" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="普可 麻醉深度监测仪(YY-106)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_puke"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--普可Ai-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Ai"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_puke_ai"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--普可EMG-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="EMG"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_puke_emg"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--普可BSR-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="BSR"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_puke_bsr"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--普可SQI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="SQI"
+                                            android:textSize="17sp" />
+
+
+                                        <TextView
+                                            android:id="@+id/device_data_puke_sqi"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <!--这里是普可曲线部分：曲线为Ai信息-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_puke"
+                                android:layout_width="match_parent"
+                                android:layout_height="130dp" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--迈瑞T8监护仪展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_mairui_t8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_mairui_t8"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_mai_rui_t8" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="迈瑞 监护仪(BeneViewT8)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_mairui_t8"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--迈瑞ECG-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="ECG"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_ecg"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+
+                                    <!--迈瑞Resp-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Resp"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_resp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--迈瑞SPO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="SpO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_spo2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--迈瑞PR-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="PR"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_pr"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--迈瑞Art 格式： 130/80-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Art"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_art"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--/-- (--)"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--迈瑞 NIBP 格式： 130/80-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="NIBP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_nibp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--/-- (--)"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+
+                                    <!--迈瑞 Temp-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Temp1"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_temp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--迈瑞 Temp-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Temp2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_temp2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--迈瑞 CVP-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="CVP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_t8_cvp"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <!--这里是迈瑞曲线部分：曲线为Resp、SPO2信息-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <!--Resp-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_mairui_t8_resp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+
+                                <!--SpO2-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_mairui_t8_spo2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <!--CVP-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_mairui_t8_cvp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+
+                                <!--Art-->
+                                <com.github.mikephil.charting.charts.LineChart
+                                    android:id="@+id/dynamic_chart_mairui_t8_art"
+                                    android:layout_width="0dp"
+                                    android:layout_height="130dp"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--迈瑞WATOEX65麻醉机展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_mairui_watoex65"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_mairui_watoex65"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_mai_rui_watoex_65" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="迈瑞 麻醉机(WATOEX65)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_mairui_watoex65"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--Ppeak-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Ppeak"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_ppeak"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="-- cmH2O"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--Pmean-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Pmean"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_pmean"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="-- cmH2O"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--MV-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1.5"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="MV"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_mv"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="2"
+                                            android:gravity="center"
+                                            android:text="-- L/min"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--TVe-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="TVe"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_tve"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="2"
+                                            android:gravity="center"
+                                            android:text="-- mL"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+                                    </LinearLayout>
+
+                                    <!--Rate-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="Rate"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_rate"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="2"
+                                            android:gravity="center"
+                                            android:text="-- bpm"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <!--FiO2-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="FiO2"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_fio2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="-- %"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+                                    </LinearLayout>
+
+                                    <!--I:E-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="I:E"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_ie"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                    <!--PEEP-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="2"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="PEEP"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_mairui_watoex65_peep"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="-- cmH2O"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--爱琴展示信息-->
+                <android.support.design.card.MaterialCardView
+                    android:id="@+id/collection_device_card_aiqin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                    <!--整体分为信息部分和曲线部分-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:orientation="vertical">
+                        <!--这里是信息部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <!--这里是仪器图片部分-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/collection_device_image_aiqin"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@mipmap/device_aiqin_egos_600a" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="爱琴 血氧参数无损监测仪(EGOS600A)"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="13dp"
+                                        android:text="接收计数:  " />
+
+                                    <TextView
+                                        android:id="@+id/collection_receive_counter_aiqin"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="5dp"
+                                        android:text="0" />
+
+                                </LinearLayout>
+
+
+                                <!--爱琴通道1-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="TOI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_toi1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--TOI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="THI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_thi1"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--THI-->
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.3"
+                                        android:text="通道1"
+                                        android:textSize="14sp" />
+                                </LinearLayout>
+
+                                <!--爱琴通道2-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="TOI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_toi2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--TOI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="THI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_thi2"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--THI-->
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.3"
+                                        android:text="通道2" />
+                                </LinearLayout>
+
+                                <!--爱琴通道3-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="TOI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_toi3"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--TOI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="THI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_thi3"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--THI-->
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.3"
+                                        android:text="通道3" />
+                                </LinearLayout>
+
+                                <!--爱琴通道4-->
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="TOI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_toi4"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--TOI-->
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="3dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/frame_content_box_small_width"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:padding="3dp">
+
+                                        <TextView
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="5dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="THI"
+                                            android:textSize="17sp" />
+
+                                        <TextView
+                                            android:id="@+id/device_data_aiqin_thi4"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:text="--"
+                                            android:textColor="@color/colorBlue"
+                                            android:textSize="17sp" />
+
+                                    </LinearLayout>
+
+                                    <!--THI-->
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="0.3"
+                                        android:text="通道4" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <!--这里是爱琴曲线部分：曲线为四个TOI信息-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_aiqin_toi1"
+                                android:layout_width="0dp"
+                                android:layout_height="130dp"
+                                android:layout_weight="1" />
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_aiqin_toi2"
+                                android:layout_width="0dp"
+                                android:layout_height="130dp"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="visible">
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_aiqin_toi3"
+                                android:layout_width="0dp"
+                                android:layout_height="130dp"
+                                android:layout_weight="1" />
+
+                            <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/dynamic_chart_aiqin_toi4"
+                                android:layout_width="0dp"
+                                android:layout_height="130dp"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </android.support.design.card.MaterialCardView>
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+        <!--测试用按钮-->
+        <android.support.design.card.MaterialCardView
+            android:id="@+id/collection_textView_test_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:padding="3dp"
+            android:visibility="gone"
+            app:cardElevation="0.5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/collection_textView_test_nuoHe"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="诺和"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_puke"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="普可"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_baolaite"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="宝莱特"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_yian"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="宜安"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_aiqin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="爱琴"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_mairui_t8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="迈瑞T8"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/collection_textView_test_mairui_watoex_65"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="迈瑞Watoex65"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
+
+        <!--底部按钮框-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <!--开始/结束采集-->
+            <android.support.design.chip.Chip
+                android:id="@+id/collection_error_log_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="开始采集"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorAccent"
+                app:chipIconSize="12sp"
+                app:closeIcon="@mipmap/start"
+                app:closeIconEnabled="true"
+                app:closeIconTint="@color/colorAccent"
+                app:rippleColor="@color/dataFragmentDataBox"
+                tools:chipIconTint="@color/colorPrimaryDark" />
+
+            <!--            <android.support.design.chip.Chip-->
+            <!--                android:id="@+id/material_button_hide_show_message"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginEnd="10dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:checked="false"-->
+            <!--                android:text="隐藏信息"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+            <!--                android:textColor="@color/colorAccent"-->
+            <!--                app:chipIconSize="12sp"-->
+            <!--                app:closeIcon="@mipmap/eye_close"-->
+            <!--                app:closeIconEnabled="true"-->
+            <!--                app:rippleColor="@color/dataFragmentDataBox"-->
+            <!--                app:closeIconTint="@color/colorAccent"-->
+            <!--                tools:chipIconTint="@color/colorPrimaryDark" />-->
+
+            <!--专用评价-->
+            <android.support.design.chip.Chip
+                android:id="@+id/material_button_manual_evaluation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="专用评价"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorAccent"
+                app:chipIconSize="12sp"
+                app:closeIcon="@mipmap/manual"
+                app:closeIconEnabled="true"
+                app:closeIconTint="@color/colorAccent"
+                app:rippleColor="@color/dataFragmentDataBox"
+                tools:chipIconTint="@color/colorPrimaryDark" />
+
+            <!--添加标记(快速)-->
+            <android.support.design.chip.Chip
+                android:id="@+id/material_button_add_mark_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="添加标记(快速)"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+                android:textColor="@color/colorAccent"
+                app:chipIconSize="12sp"
+                app:chipIconTint="@color/colorAccent"
+                app:closeIcon="@mipmap/mark"
+                app:closeIconEnabled="true"
+                app:closeIconTint="@color/colorAccent"
+                app:rippleColor="@color/titleColorSelected"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <!--侧滑菜单-->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/collection_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:visibility="gone"
+        app:headerLayout="@layout/collection_nav_header_main"
+        app:menu="@menu/collection_nav_menu_main" />
+
+</android.support.v4.widget.DrawerLayout>

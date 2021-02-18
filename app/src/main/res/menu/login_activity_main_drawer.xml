@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--登录界面的抽屉布局的目录-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login_main"
+            android:icon="@mipmap/login"
+            android:title="登录"/>
+        <item
+            android:id="@+id/nav_login_feedback"
+            android:icon="@mipmap/feedback"
+            android:title="反馈"/>
+        <item
+            android:id="@+id/nav_login_message"
+            android:icon="@mipmap/message"
+            android:title="消息"/>
+        <item
+            android:id="@+id/nav_login_tools"
+            android:icon="@mipmap/tools"
+            android:title="工具"/>
+    </group>
+
+    <item android:title="其他" >
+        <menu>
+            <item
+                android:id="@+id/nav_login_help"
+                android:icon="@mipmap/help"
+                android:title="帮助"/>
+
+            <item
+                android:id="@+id/nav_login_about"
+                android:icon="@mipmap/about"
+                android:title="关于"/>
+
+        </menu>
+    </item>
+
+</menu>

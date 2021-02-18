@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:background="#CCCCCC" >
+
+        <ImageView
+            android:id="@+id/patient_info_debug_button"
+            android:layout_marginStart="30dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/item" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="基本信息录入"
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/patient_info_reload_patient_info"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:src="@mipmap/reload" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                app:strokeColor="@android:color/darker_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="医院基本信息"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/frame_autofill_edittext"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="医院省份"
+                                android:textSize="15sp" />
+
+                            <org.angmarch.views.NiceSpinner
+                                android:id="@+id/health_record_spinner_hospitalArea"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/frame_content_box_small_width"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3">
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="80dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/frame_autofill_edittext"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="医院等级"
+                                android:textSize="15sp" />
+
+                            <org.angmarch.views.NiceSpinner
+                                android:id="@+id/health_record_spinner_hospitalLevel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/frame_content_box_small_width"
+                                android:textAlignment="center" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/frame_autofill_edittext"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="医院名称"
+                            android:textSize="15sp" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/health_record_hospital_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+
+                            android:hint="输入医院名称"
+                            android:textAlignment="viewStart"
+                            android:textSize="14sp">
+
+                        </AutoCompleteTextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.design.card.MaterialCardView>
+
+
+            <!--病人基本信息的布局-->
+            <android.support.design.card.MaterialCardView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                app:strokeColor="@android:color/darker_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="病人基本信息"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_person_ID"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="身份证号（18位数字最后一位可为X）"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_hospitalLivingID"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="住院号"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_age"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="年龄(0-140岁)"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_height"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="身高(cm)(整数)"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="10dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_weight"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:maxLines="8"
+                                    android:hint="体重(kg)(整数)"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:padding="3dp"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="性别"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <RadioGroup
+                                    android:id="@+id/patientInfo_ratioGroup_PatientSex"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioButton_man"
+                                        style="@android:style/Widget.Holo.CompoundButton.RadioButton"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="男"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioButton_woman"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="女"
+                                        android:textSize="12sp" />
+
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.design.card.MaterialCardView>
+
+
+            <android.support.design.card.MaterialCardView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content"
+                app:strokeColor="@android:color/darker_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="手术基本信息"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_operation_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="手术名称"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <ImageView
+                                android:id="@+id/patient_info_choose_operation_name"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="30dp"
+                                android:src="@mipmap/search2"
+                                />
+
+                        </LinearLayout>
+
+                        <!--医院手麻系统对应序列号-->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_hospital_operation_number"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="手麻系统手术序列号（病人ID号）"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+
+                        <!--术前诊断-->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_before_operation_diagnosis"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="术前诊断"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:padding="7dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="急诊"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <RadioGroup
+                                    android:id="@+id/patientInfo_ratioGroup_isUrgent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioButton_urgent"
+                                        style="@android:style/Widget.Holo.CompoundButton.RadioButton"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="是"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioButton_urgentNo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="否"
+                                        android:textSize="12sp" />
+
+                                </RadioGroup>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:layout_weight="2.5"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="ASA分级"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <RadioGroup
+                                    android:id="@+id/patientInfo_ratioGroup_ASALevel"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioGroup_ASALevel_1"
+                                        style="@android:style/Widget.Holo.CompoundButton.RadioButton"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="1级"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioGroup_ASALevel_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="2级"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioGroup_ASALevel_3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="3级"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioGroup_ASALevel_4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="4级"
+                                        android:textSize="12sp" />
+
+                                    <RadioButton
+                                        android:id="@+id/health_record_ratioGroup_ASALevel_5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="5级"
+                                        android:textSize="12sp" />
+                                </RadioGroup>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <!--这里是做几个分级的选择框-->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:padding="7dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!--心功能分级-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="心功能分级"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <org.angmarch.views.NiceSpinner
+                                    android:id="@+id/health_record_heart_function_level"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="3dp"
+                                    android:background="@drawable/frame_content_box_small_width" />
+
+                            </LinearLayout>
+
+                            <!--肺功能分级-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="肺功能分级"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <org.angmarch.views.NiceSpinner
+                                    android:id="@+id/health_record_lung_function_level"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="3dp"
+                                    android:background="@drawable/frame_content_box_small_width" />
+                            </LinearLayout>
+
+
+
+                            <!--肝功能分级-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="肝功能分级"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <org.angmarch.views.NiceSpinner
+                                    android:id="@+id/health_record_liver_function_level"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="3dp"
+                                    android:background="@drawable/frame_content_box_small_width" />
+                            </LinearLayout>
+
+
+                            <!--肾功能分级-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="7dp"
+                                    android:text="肾功能分级"
+                                    android:textAlignment="center"
+                                    android:textSize="14sp" />
+
+                                <org.angmarch.views.NiceSpinner
+                                    android:id="@+id/health_record_kidney_function_level"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="3dp"
+                                    android:background="@drawable/frame_content_box_small_width" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <!--麻醉方式-->
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="10dp"
+                            android:layout_margin="12dp"
+                            android:gravity="center"
+                            android:background="@drawable/frame_autofill_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="麻醉方式"
+                                android:textAlignment="center" />
+
+                            <!--麻醉方式-->
+                            <LinearLayout
+                                android:layout_marginTop="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:id="@+id/health_record_mazuifangshi_ju_ma"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="局麻"
+                                    />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="腰麻"
+                                    android:id="@+id/health_record_mazuifangshi_yao_ma"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="MAC麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_mac_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="阻滞麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_zu_zhi_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="吸入麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_xi_ru_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <!--麻醉方式-->
+                            <LinearLayout
+                                android:layout_marginTop="5dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="静吸复合麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_jing_xi_fu_he_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="全凭静脉麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_quan_ping_jing_mai_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="腰硬联合麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_yao_ying_lian_he_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v7.widget.AppCompatCheckBox
+                                    android:text="持续硬膜外麻醉"
+                                    android:id="@+id/health_record_mazuifangshi_chi_xu_ying_mo_wai_ma_zui"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/health_record_operation_sick_history"
+                                    android:text="无"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="既往病史"
+                                    android:textSize="12sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_margin="10dp"
+                                android:padding="5dp"
+                                android:background="@drawable/frame_autofill_edittext"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:text="无"
+                                    android:id="@+id/health_record_operation_special_disease_case"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:hint="特殊病情(情况)"
+                                    android:textSize="12sp"
+                                    android:autofillHints="无" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+            </android.support.design.card.MaterialCardView>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"/>
+
+    <Button
+        android:id="@+id/health_record_button_commit"
+        android:text="提   交"
+        android:padding="10dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/frame_login_button"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_width="100dp"
+        android:textSize="20sp"
+        android:layout_gravity="right"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

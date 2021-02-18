@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="titleColor">#757575</color>
+    <color name="titleColorSelected">#F54D33</color>
+
+    <color name="gettingOperationNumber">#757575</color>
+    <color name="collectingData">#F54D33</color>
+
+    <color name="tableTextBackGroundColor">#CCCCCC</color>
+
+    <color name="toolBarColor">#CCCCCC</color>
+
+    <color name="colorBlack">#333333</color>
+
+
+    <color name="dataFragmentDeviceName">@android:color/black</color>
+    <color name="dataFragmentDataBox">@android:color/holo_orange_light</color>
+    <color name="dataFragmentData">@android:color/holo_green_dark</color>
+    <color name="dataFragmentDataName">@android:color/black</color>
+    <color name="dataFragmentBackgroundTint">@android:color/white</color>
+
+    <color name="colorBlue">#1296db</color>
+
+
+    <color name="collection_status_collecting">#D81B60</color>
+    <color name="collection_status_finished">#008577</color>
+
+</resources>

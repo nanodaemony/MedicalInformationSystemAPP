@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF" >
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/frame_textview" >
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="提  示"
+            android:textSize="25sp" />
+
+        <View
+            android:id="@+id/view11111"
+
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            />
+
+        <View
+            android:layout_width="480dp"
+            android:layout_gravity="center"
+            android:layout_height="1.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/collection_confirm_exit_message"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="退出将重新连接才能开始监测，确定退出？"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/dialog_btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:text="取消退出"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/dialog_btn_sure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:textColor="@android:color/holo_red_light"
+                android:text="确定退出"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

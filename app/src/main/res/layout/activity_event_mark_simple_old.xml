@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:background="#CCCCCC" >
+
+        <ImageView
+            android:id="@+id/mark_simple_imageView_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="30dp"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="快速手术事件标记"
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/mark_complex_imageView_update"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="30dp"
+            android:src="@mipmap/item" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/mark_simple_textView_current_choosed_mark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            android:padding="3dp"
+            android:text="已选标记:"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_content_box_small_width"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+
+            <ListView
+                android:id="@+id/mark_simple_listView_mark_event_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll">
+
+
+            </ListView>
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/frame_autofill_edittext"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/mark_simple_event_side_effect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="不良反应/特殊情况"
+                android:text="无"
+                android:textSize="12sp" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="已标记的事件"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_content_box_small_width"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+
+            <ListView
+                android:id="@+id/mark_simple_listView_choosed_mark_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll">
+
+
+            </ListView>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/mark_simple_sure_choose_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/white"
+        android:backgroundTint="@android:color/white"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="确认标记"
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="18sp"
+        app:cornerRadius="3dp"
+        app:icon="@mipmap/mark"
+        app:iconGravity="textStart"
+        app:iconSize="20dp"
+        app:iconTint="@android:color/holo_green_dark"
+        app:rippleColor="@android:color/holo_blue_light" />
+
+</LinearLayout>

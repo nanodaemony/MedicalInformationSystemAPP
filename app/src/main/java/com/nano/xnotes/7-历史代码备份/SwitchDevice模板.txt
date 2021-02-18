@@ -1,0 +1,152 @@
+        switch (deviceEnum) {
+            case NUO_HE_NW9002S:
+
+                break;
+            case PU_KE_YY106:
+
+                break;
+            case BAO_LAI_TE_A8:
+
+                break;
+            case YI_AN_8700A:
+
+                break;
+            case MAI_RUI_T8:
+
+                break;
+            case MAI_RUI_WATOEX65:
+
+                break;
+            case LI_BANG_ELITEV8:
+
+                break;
+            case AI_QIN_EGOS600A:
+
+                break;
+            case AI_QIN_EGOS600B:
+
+                break;
+
+            case AI_QIN_EGOS600C:
+
+                break;
+            case MING_XI_MNIR_P100:
+
+                break;
+            case MEI_DUN_LI_EEG_VISTA:
+
+                break;
+            case MEI_DUN_LI_5100C:
+
+                break;
+            case KE_MAN_AX700:
+
+                break;
+            case CHANG_FENG_ACM608B:
+
+                break;
+            case DRAGER_FABIUS_PLUS:
+
+                break;
+            case PU_BO_BOARAY700:
+
+                break;
+            case CHEN_WEI_CWH302:
+
+                break;
+            case MAI_RUI_SV300:
+
+                break;
+            case YI_AN_VT5250:
+
+                break;
+            case CHEN_WEI_CWH3020B:
+
+                break;
+            case SHU_PU_SI_DA_S1200:
+
+                break;
+            case DRAGER_V300:
+
+                break;
+            case KE_MAN_C90:
+
+                break;
+            case PHILIPS_MX:
+                break;
+            case TAI_JI_TD3200A:
+
+                break;
+            case WEI_HAO_KANG_ANGEL6000D:
+
+                break;
+            case MASIMO_RADICAL7:
+
+                break;
+
+            default:
+        }
+
+
+
+// 没有break的
+       switch (deviceEnum) {
+            case NUO_HE_NW9002S:
+
+            case PU_KE_YY106:
+
+            case BAO_LAI_TE_A8:
+
+            case YI_AN_8700A:
+
+            case MAI_RUI_T8:
+
+            case MAI_RUI_WATOEX65:
+
+            case LI_BANG_ELITEV8:
+
+            case AI_QIN_EGOS600A:
+
+            case AI_QIN_EGOS600B:
+
+
+            case AI_QIN_EGOS600C:
+
+            case MING_XI_MNIR_P100:
+
+            case MEI_DUN_LI_EEG_VISTA:
+
+            case MEI_DUN_LI_5100C:
+
+            case KE_MAN_AX700:
+
+            case CHANG_FENG_ACM608B:
+
+            case DRAGER_FABIUS_PLUS:
+
+            case PU_BO_BOARAY700:
+
+            case CHEN_WEI_CWH302:
+
+            case MAI_RUI_SV300:
+
+            case YI_AN_VT5250:
+
+            case CHEN_WEI_CWH3020B:
+
+            case SHU_PU_SI_DA_S1200:
+
+            case DRAGER_V300:
+
+            case KE_MAN_C90:
+
+            case PHILIPS_MX:
+            case TAI_JI_TD3200A:
+
+            case WEI_HAO_KANG_ANGEL6000D:
+
+            case MASIMO_RADICAL7:
+
+
+            default:
+        }

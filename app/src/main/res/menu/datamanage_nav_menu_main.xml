@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_collection_working_info"
+            android:icon="@mipmap/message"
+            android:title="   工作信息"/>
+
+
+
+    </group>
+
+    <item android:title="其他">
+        <menu>
+
+            <item
+                android:id="@+id/nav_collection_maintain"
+                android:icon="@mipmap/mark"
+                android:title="   维护"/>
+
+            <item
+                android:id="@+id/nav_collection_setting"
+                android:icon="@mipmap/setting"
+                android:title="   设置"/>
+        </menu>
+    </item>
+
+</menu>

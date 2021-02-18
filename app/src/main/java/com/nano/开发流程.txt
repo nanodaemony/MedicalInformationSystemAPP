@@ -1,0 +1,56 @@
+
+1. AppStatic设置网络，调试模式等参数.
+
+2. device.DeviceEnum: 确定仪器的基本信息(仪器号,名称,IP地址等信息).
+
+3. device.DeviceUtil: 将仪器信息加入到Map中.
+
+4. 根据仪器协议进行开发,同时生成文档记录到note中.
+
+5. 开发仪器数据采集的界面XML文件.
+
+6. activity.collection.fragment: 开发仪器独有的Fragment.
+
+7. collection.parsedata.entity: 开发仪器的数据实体.
+
+7.2 开发对应的SQL.
+
+8. collection.parsedata.parser: 开发仪器的数据解析器.
+
+9. collection: 开发仪器自己的数据采集器Collector.
+
+10. activity.collection.DataCollectionUtils: 补充仪器的各种信息UnityMap.
+
+11. DataCollectionActivity: 开发测试发送仪器数据的内容. 以及TestUtil中的内容.
+
+/////////////////////////////////////////////////////////////////////
+
+1. application.xml中进行自定义配置参数的选择.
+
+2. evaluation.devicedata.dataentity: 对照采集器APP添加仪器数据实体.
+
+3. evaluation.devicedata.repository: 开发仪器数据实体的Repository.
+
+4. evaluation.devicedata.parser: 添加对应仪器的数据解析器。
+
+5. evaluation.devicedata.context.DeviceDataParserContext: 将仪器数据解析器加入到Map中.
+
+6. evaluation.devicedata.context.DeviceDataRepositoryContext: 将仪器数据的Repository加入到Map中.
+
+7. evaluation.devicedata.service.impl.DeviceDataServiceImpl: 构造返回给前端的历史仪器数据Map.
+
+8. com.nano.msc.evaluation.info.service.impl.DeviceInfoCollectionServiceImpl: 添加仪器结束采集后的数据统计逻辑 + 仪器Abandon数据之后的数据删除.
+
+如果仪器卡片需要改变内容,那么修改platform.vo.DeviceCardInfoVo返回的信息并修改相关逻辑.
+
+
+改动:
+
+1. com.nano.msc.evaluation.info.service.impl.InfoDeviceServiceImpl#getAccessDeviceTypeCounter();
+
+
+
+
+
+
+
