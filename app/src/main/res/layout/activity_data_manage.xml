@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/collection_drawer_layout"
+    android:id="@+id/drawer_layout_data_manage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -13,29 +13,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <!--顶部Toolbar信息-->
         <android.support.v7.widget.Toolbar
-            android:id="@+id/collection_toolbar"
+            android:id="@+id/toolbar_data_manage"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@color/toolBarColor"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <!--整体采集状态的信息框-->
-            <TextView
-                android:id="@+id/collection_data_whole_status"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="尚未开始"
-                android:textSize="15sp" />
         </android.support.v7.widget.Toolbar>
-
-
-        <!--仪器数据卡片展示框-->
 
         <!--可能需要修改这一部分的高度值来满足界面需求-->
         <ScrollView
@@ -49,300 +37,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--仪器1-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-
-                <!--仪器2-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_2"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <!--仪器3-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_3"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <!--仪器4-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_4"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <!--仪器5-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_5"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <!--仪器6-->
-                <LinearLayout
-                    android:id="@+id/collection_device_layout_collection_6"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
         </ScrollView>
-
-
-        <!--测试数据按钮框-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-        </LinearLayout>
-
-
-        <!--测试按钮的布局-->
-        <android.support.design.card.MaterialCardView
-            android:id="@+id/collection_textView_test_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:padding="3dp"
-            android:visibility="gone"
-            app:cardElevation="0.5dp">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/collection_textView_test_nuoHe"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="诺和"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_puke"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="普可"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_baolaite"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="宝莱特"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_yian_8700a"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="宜安8700"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_aiqin"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="爱琴"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_mairui_t8"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="迈瑞T8"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_mairui_watoex_65"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="迈瑞65"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_libang_elite_v8"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="理邦"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_aiqin600a"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="爱琴A"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_aiqin600b"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="爱琴B"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/collection_textView_test_aiqin600c"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="爱琴C"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
-
-        </android.support.design.card.MaterialCardView>
-
-
-        <!--底部按钮框-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:padding="3dp">
-
-            <!--错误信息计数器-->
-            <android.support.design.chip.Chip
-                android:id="@+id/collection_error_log_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="错误信息(0)"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorAccent"
-                app:chipIconSize="12sp"
-                app:closeIcon="@mipmap/start"
-                app:closeIconEnabled="true"
-                app:closeIconTint="@color/colorAccent"
-                app:rippleColor="@color/dataFragmentDataBox"
-                tools:chipIconTint="@color/colorPrimaryDark" />
-
-
-<!--            &lt;!&ndash;专用评价&ndash;&gt;-->
-<!--            <android.support.design.chip.Chip-->
-<!--                android:id="@+id/material_button_manual_evaluation"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:checked="false"-->
-<!--                android:text="专用评价"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
-<!--                android:textColor="@color/colorAccent"-->
-<!--                app:chipIconSize="12sp"-->
-<!--                app:closeIcon="@mipmap/manual"-->
-<!--                app:closeIconEnabled="true"-->
-<!--                app:closeIconTint="@color/colorAccent"-->
-<!--                app:rippleColor="@color/dataFragmentDataBox"-->
-<!--                tools:chipIconTint="@color/colorPrimaryDark" />-->
-
-            <!--专用评价-->
-
-            <!--添加标记事件-->
-            <android.support.design.chip.Chip
-                android:id="@+id/material_button_add_mark_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="添加标记"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
-                android:textColor="@color/colorAccent"
-                app:chipIconSize="12sp"
-                app:chipIconTint="@color/colorAccent"
-                app:closeIcon="@mipmap/mark"
-                app:closeIconEnabled="true"
-                app:closeIconTint="@color/colorAccent"
-                app:rippleColor="@color/titleColorSelected"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
 
     </LinearLayout>
 
 
     <!--侧滑菜单-->
     <android.support.design.widget.NavigationView
-        android:id="@+id/collection_nav_view"
+        android:id="@+id/nav_view_data_manage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:visibility="gone"
-        app:headerLayout="@layout/collection_nav_header_main"
-        app:menu="@menu/collection_nav_menu_main" />
+        app:headerLayout="@layout/nav_header_main_data_manage"
+        app:menu="@menu/nav_menu_main_data_manage" />
 
 </android.support.v4.widget.DrawerLayout>

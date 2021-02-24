@@ -99,4 +99,7 @@ public class AppStatic {
      */
     public static final int ERROR_LOG_SIZE = 100;
 
+    // 关于数据管理的全局变量
+    public static WorkingModeEnum workingMode = WorkingModeEnum.DATA_MANAGEMENT;
+
 }

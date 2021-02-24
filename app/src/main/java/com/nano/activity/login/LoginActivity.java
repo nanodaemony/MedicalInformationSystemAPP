@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.nano.R;
+import com.nano.WorkingModeEnum;
 import com.nano.activity.datamanage.DataManageActivity;
 import com.nano.activity.heartblood.HeartBloodActivity;
 import com.nano.common.logger.Logger;
@@ -93,20 +94,21 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
                 if (btnDataManage.isChecked()) {
                     Intent intent = new Intent(LoginActivity.this, DataManageActivity.class);
                     startActivity(intent);
+                    AppStatic.workingMode = WorkingModeEnum.DATA_MANAGEMENT;
                 } else if (btnHeartAndBloodCollection.isChecked()) {
                     Intent intent = new Intent(LoginActivity.this, HeartBloodActivity.class);
                     startActivity(intent);
+                    AppStatic.workingMode = WorkingModeEnum.HEART_BLOOD;
                 } else if (btnDeviceDataCollection.isChecked()) {
                     Intent intent = new Intent(LoginActivity.this, HealthRecordActivity.class);
                     startActivity(intent);
+                    AppStatic.workingMode = WorkingModeEnum.DEVICE_DATA;
                 }
             } else {
                 ToastUtil.toast(getApplicationContext(), "用户名或密码错误", TastyToast.ERROR);
             }
 
         });
-
-
 
         // 忘记密码
         tvForgetPassword.setOnClickListener(v -> SimpleDialog.show(LoginActivity.this, "忘记密码", "请联系QQ：1174520425", R.mipmap.help));

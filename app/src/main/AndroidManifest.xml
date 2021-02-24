@@ -79,6 +79,8 @@
 
         <activity android:name=".activity.datamanage.DataManageActivity"/>
 
+        <activity android:name=".activity.dataupload.DataUploadActivity"/>
+
     </application>
 
 </manifest>

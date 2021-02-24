@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collection_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <!--整体布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--顶部Toolbar信息-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/heart_blood_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/toolBarColor"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <!--整体采集状态的信息框-->
+            <TextView
+                android:id="@+id/heart_blood_whole_status"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="等待连接"
+                android:textSize="16sp" />
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <!--可能需要修改这一部分的高度值来满足界面需求-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--心电数据及图形-->
+                <android.support.design.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="@dimen/device_card_elevation"
+                    android:layout_margin="@dimen/device_card_layout_margin"
+                    android:id="@+id/heart_blood_card_heart"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <!--标题部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+
+                            <TextView
+                                android:layout_margin="5dp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="心电"
+                                android:textColor="#009688"
+                                android:textSize="22dp" />
+
+                            <TextView
+                                android:id="@+id/heart_blood_collection_status_heart"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"
+                                android:text="等待采集"
+                                android:textAlignment="viewEnd" />
+
+
+                        </LinearLayout>
+
+                        <!--数据部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--血氧数据及图形-->
+                <android.support.design.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="@dimen/device_card_elevation"
+                    android:layout_margin="@dimen/device_card_layout_margin"
+                    android:id="@+id/heart_blood_card_blood"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <!--标题部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+
+                            <TextView
+                                android:layout_margin="5dp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="血氧饱和度"
+                                android:textColor="#009688"
+                                android:textSize="22dp" />
+
+
+                            <TextView
+                                android:id="@+id/heart_blood_collection_status_blood"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"
+                                android:text="等待采集"
+                                android:textAlignment="viewEnd" />
+
+
+                        </LinearLayout>
+
+                        <!--数据部分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <!--HR-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_margin="5dp"
+                                    android:text="HR"
+                                    android:textSize="20dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                                <TextView
+                                    android:id="@+id/heart_blood_data_hr"
+                                    android:layout_margin="5dp"
+                                    android:text="67"
+                                    android:textSize="50dp"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+                            <!--SPO2-->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                >
+                                <TextView
+                                    android:layout_margin="5dp"
+                                    android:text="SpO2"
+                                    android:textSize="20dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                                <TextView
+                                    android:id="@+id/heart_blood_data_spo2"
+                                    android:layout_margin="5dp"
+                                    android:text="99"
+                                    android:textSize="50dp"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/heart_blood_data_test"
+            />
+
+
+        <!--底部按钮框-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            >
+
+            <!--心电血氧采集控制按钮-->
+            <android.support.design.button.MaterialButton
+                android:id="@+id/heart_blood_control_button"
+                android:layout_gravity="right"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="开始采集"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                android:textColor="@color/default_back_stroke_color"
+                android:textSize="15sp"
+                app:rippleColor="@android:color/white" />
+
+            <!--进行数据处理的按钮-->
+            <android.support.design.button.MaterialButton
+                android:id="@+id/heart_blood_do_data_processing"
+                android:layout_gravity="right"
+                android:visibility="visible"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="数据上链"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                android:textColor="@color/default_back_stroke_color"
+                android:textSize="15sp"
+                app:rippleColor="@android:color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
