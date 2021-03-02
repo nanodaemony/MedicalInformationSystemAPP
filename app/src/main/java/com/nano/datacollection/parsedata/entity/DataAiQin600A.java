@@ -16,9 +16,9 @@ import lombok.Data;
 public class DataAiQin600A implements Serializable {
 
     /**
-     * 手术场次号
+     * 采集场次号
      */
-    private Integer operationNumber = AppStatic.operationNumber;
+    private Integer collectionNumber;
 
     /**
      * 序列号

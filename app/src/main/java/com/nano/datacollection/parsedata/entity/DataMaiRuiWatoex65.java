@@ -14,7 +14,10 @@ import lombok.Data;
 @Data
 public class DataMaiRuiWatoex65 {
 
-    private Integer operationNumber = AppStatic.operationNumber;
+    /**
+     * 采集场次号
+     */
+    private Integer collectionNumber;
 
     private String serialNumber;
 

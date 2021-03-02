@@ -21,6 +21,7 @@ import com.nano.device.MedicalDevice;
 import com.suke.widget.SwitchButton;
 
 import org.angmarch.views.NiceSpinner;
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -81,10 +82,10 @@ public class DeviceChooseFragment  extends Fragment {
         // 说明找到了
         if (historyIndex != PersistUtil.DEFAULT_INTEGER_VALUE) {
             spServiceLife.setSelectedIndex(historyIndex);
-            device.setServiceLife(historyIndex);
+            device.setServiceLife((double)historyIndex);
         } else {
             spServiceLife.setSelectedIndex(0);
-            device.setServiceLife(0);
+            device.setServiceLife(0D);
         }
 
         etSerialNumber.addTextChangedListener(new TextWatcher() {
@@ -105,7 +106,7 @@ public class DeviceChooseFragment  extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int serviceLife = spServiceLife.getSelectedIndex();
-                device.setServiceLife(serviceLife);
+                device.setServiceLife((double)serviceLife);
                 PersistUtil.putIntegerValue("DeviceServiceLifeIndex" + device.getDeviceCode(), serviceLife);
             }
             @Override

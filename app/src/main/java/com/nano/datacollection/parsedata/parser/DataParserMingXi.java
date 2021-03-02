@@ -3,7 +3,7 @@ package com.nano.datacollection.parsedata.parser;
 import com.alibaba.fastjson.JSON;
 import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DeviceDataParser;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 import com.nano.datacollection.parsedata.entity.DataMingXi;
 
 /**
@@ -24,12 +24,13 @@ public class DataParserMingXi implements DeviceDataParser {
      * @return 数据
      */
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
 
         // MNIR-P100:L=0.001;R=0.743;LHB=0.000;LHBO=0.000;RHB=585.000;RHBO=1639.000;
 
         DataMingXi dataMingXi = new DataMingXi();
         dataMingXi.setSerialNumber(serialNumber);
+        dataMingXi.setCollectionNumber(collectionNumber);
         deviceOriginData = deviceOriginData.trim();
 
 
@@ -37,7 +38,7 @@ public class DataParserMingXi implements DeviceDataParser {
 
         String dataString = JSON.toJSONString(dataMingXi);
         // 返回解析好的数据
-        return new DeviceData(deviceCode, dataMingXi, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataMingXi, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
 

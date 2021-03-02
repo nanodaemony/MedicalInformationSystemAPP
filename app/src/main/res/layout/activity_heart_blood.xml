@@ -39,7 +39,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2.3"
             android:layout_margin="4dp">
 
             <LinearLayout
@@ -86,9 +86,8 @@
                                 android:layout_weight="1"
                                 android:text="等待采集"
                                 android:textAlignment="viewEnd" />
-
-
                         </LinearLayout>
+
 
                         <!--数据部分-->
                         <LinearLayout
@@ -96,7 +95,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             >
-
+                            <com.nano.activity.heartblood.EcgView
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="250dp"
+                                />
 
                         </LinearLayout>
 
@@ -220,6 +223,17 @@
         </ScrollView>
 
 
+        <!--数据上传日志信息框-->
+        <ListView
+            android:id="@+id/heart_blood_data_upload_log"
+            android:visibility="gone"
+            android:layout_margin="10dp"
+            android:background="@drawable/frame_content_box_small_width"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -261,7 +275,7 @@
             <android.support.design.button.MaterialButton
                 android:id="@+id/heart_blood_do_data_processing"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="0dp"
                 android:layout_weight="1"

@@ -5,7 +5,7 @@ import com.nano.common.logger.Logger;
 import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DataCons;
 import com.nano.datacollection.parsedata.DeviceDataParser;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 import com.nano.datacollection.parsedata.entity.DataNuoHe;
 
 /**
@@ -28,11 +28,12 @@ public class DataParserNuoHeV405 implements DeviceDataParser {
      * @return 数据
      */
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
         // 初始化数据结构
         DataNuoHe dataNuoHe = new DataNuoHe();
         // 设置序列号
         dataNuoHe.setSerialNumber(serialNumber);
+        dataNuoHe.setCollectionNumber(collectionNumber);
         // 新版本数据:
         // 66666630313538313035310432000000E1FFFF000F0F01513D007979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797979797900000000000000005F5F0000080D040000000014EE53C5C4AF01F2FF00000000000000000000000000000000000000000000000430E40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
         if (verifyData(deviceOriginData)) {
@@ -65,7 +66,7 @@ public class DataParserNuoHeV405 implements DeviceDataParser {
         }
         String dataString = JSON.toJSONString(dataNuoHe);
         // 返回解析好的数据
-        return new DeviceData(deviceCode, dataNuoHe, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataNuoHe, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
     /**
@@ -76,10 +77,12 @@ public class DataParserNuoHeV405 implements DeviceDataParser {
      */
     @Override
     public boolean verifyData(String data) {
-        // 长度低于262直接不对
-        if (data.length() < 360) {
-            return false;
-        }
-        return data.trim().startsWith("666666");
+        // 这里在医院调试的时候出过BUG,所以改成直接返回true
+        return true;
+//        // 长度低于262直接不对
+//        if (data.length() < 360) {
+//            return false;
+//        }
+//        return data.trim().startsWith("666666");
     }
 }

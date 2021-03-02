@@ -15,9 +15,9 @@ import lombok.Data;
 public class DataNuoHe {
 
     /**
-     * 手术场次号
+     * 采集场次号
      */
-    private Integer operationNumber = AppStatic.operationNumber;
+    private Integer collectionNumber;
 
     /**
      * 序列号
@@ -48,7 +48,6 @@ public class DataNuoHe {
      * 采集时间
      */
     private String gmtCreate = TimeStampUtils.getCurrentTimeAsString();
-
 
 
 }

@@ -24,14 +24,15 @@
             android:background="@color/toolBarColor"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <!--整体采集状态的信息框-->
-            <TextView
-                android:id="@+id/collection_data_whole_status"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="尚未开始"
-                android:textSize="15sp" />
+<!--            &lt;!&ndash;整体采集状态的信息框&ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/collection_data_whole_status"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center"-->
+<!--                android:text="尚未开始"-->
+<!--                android:textSize="15sp" />-->
+
         </android.support.v7.widget.Toolbar>
 
 
@@ -252,9 +253,6 @@
 
             </LinearLayout>
 
-
-
-
         </android.support.design.card.MaterialCardView>
 
 
@@ -268,6 +266,26 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:padding="3dp">
+
+            <!--控制全部开启采集或停止采集-->
+            <android.support.design.chip.Chip
+                android:id="@+id/material_button_controll_all_collection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="全部开始采集"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+                android:textColor="@color/colorAccent"
+                app:chipIconSize="12sp"
+                app:chipIconTint="@color/colorAccent"
+                app:closeIcon="@mipmap/add3"
+                app:closeIconEnabled="true"
+                app:closeIconTint="@color/colorAccent"
+                app:rippleColor="@color/titleColorSelected"
+                tools:ignore="HardcodedText" />
 
             <!--错误信息计数器-->
             <android.support.design.chip.Chip
@@ -309,6 +327,7 @@
 <!--                tools:chipIconTint="@color/colorPrimaryDark" />-->
 
             <!--专用评价-->
+
 
             <!--添加标记事件-->
             <android.support.design.chip.Chip

@@ -17,7 +17,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.nano.AppStatic;
 import com.nano.R;
 import com.nano.activity.devicedata.collection.DataCollectionActivity;
@@ -29,14 +28,10 @@ import com.nano.device.MedicalDevice;
 import com.nano.http.HttpHandler;
 import com.nano.http.HttpManager;
 import com.nano.http.HttpMessage;
+import com.nano.http.ServerIpEnum;
 import com.sdsmdg.tastytoast.TastyToast;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * Description: 仪器选择的Fragment的界面
@@ -51,12 +46,12 @@ public class DeviceChooseActivity extends AppCompatActivity implements HttpHandl
 
     private Logger logger = new Logger("DeviceChooseActivity");
 
+    private int clickCounter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_choose);
-
-        httpManager.getNetworkStatus();
 
         // 初始化几个仪器展示的布局(几个仪器的布局ID)
         int[] deviceLayoutIds = new int[28];
@@ -136,7 +131,20 @@ public class DeviceChooseActivity extends AppCompatActivity implements HttpHandl
             }
         });
 
+        // 最后看看网络状态
+        httpManager.getNetworkStatus();
 
+        // 预生产模式
+        TextView tvPreProd = findViewById(R.id.device_choose_pre_prod);
+        tvPreProd.setOnClickListener(view -> {
+            clickCounter++;
+            if (clickCounter % 5 == 0) {
+                ToastUtil.toastSuccess(this, "Pre Production Mode.");
+                AppStatic.serverIpEnum = ServerIpEnum.CLOUD_SERVER_PRE_PROD;
+            } else {
+                AppStatic.serverIpEnum = ServerIpEnum.CLOUD_SERVER_PROD;
+            }
+        });
     }
 
 
@@ -179,14 +187,6 @@ public class DeviceChooseActivity extends AppCompatActivity implements HttpHandl
                     PersistUtil.putLongValue("DeviceLastUseTime" + device.getDeviceCode(), System.currentTimeMillis());
                 }
             }
-            // 构造上传到服务器的仪器信息
-            List<InfoDevice> infoDeviceList = new ArrayList<>(6);
-            for (MedicalDevice medicalDevice : AppStatic.medicalDeviceMap.values()) {
-                if (medicalDevice.isDeviceUsed()) {
-                    infoDeviceList.add(new InfoDevice("" + medicalDevice.getDeviceCode(), medicalDevice.getSerialNumber(), (double) medicalDevice.getServiceLife()));
-                }
-            }
-            AppStatic.collectionBasicInfoEntity.setUsedDeviceInfo(JSON.toJSONString(infoDeviceList));
             Intent intent = new Intent(this, DataCollectionActivity.class);
             startActivity(intent);
         });
@@ -217,30 +217,6 @@ public class DeviceChooseActivity extends AppCompatActivity implements HttpHandl
         runOnUiThread(() -> ToastUtil.toastSuccess(this, "网络异常"));
     }
 
-
-    /**
-     * 用于上传到服务器的仪器信息类
-     * @author cz
-     */
-    @Data
-    private  static class InfoDevice implements Serializable {
-
-        private static final long serialVersionUID = 233410313766289238L;
-        // 仪器号
-        private String deviceCode;
-        // 序列号
-        private String deviceSerialNumber;
-        // 生产日期
-        private LocalDate deviceProduceDate;
-        // 服务年限
-        private Double deviceServiceLife;
-
-        public InfoDevice(String deviceCode, String deviceSerialNumber, Double deviceServiceLife) {
-            this.deviceCode = deviceCode;
-            this.deviceSerialNumber = deviceSerialNumber;
-            this.deviceServiceLife = deviceServiceLife;
-        }
-    }
 
 
     /**

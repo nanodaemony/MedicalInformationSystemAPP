@@ -32,7 +32,7 @@ public class TaskExecutor {
     /**
      * 线程池执行器
      */
-    private static ThreadPoolExecutor taskExecutor;
+    public static ThreadPoolExecutor taskExecutor;
 
     /**
      * 系统初始化时进行调用，进而初始化Http功能

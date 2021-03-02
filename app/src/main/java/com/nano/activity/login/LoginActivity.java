@@ -2,6 +2,7 @@ package com.nano.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -26,6 +27,15 @@ import com.nano.activity.devicedata.healthrecord.HealthRecordActivity;
 import com.nano.common.logger.LoggerFactory;
 import com.nano.http.ServerPathEnum;
 import com.sdsmdg.tastytoast.TastyToast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -69,8 +79,6 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
         btnDeviceDataCollection = findViewById(R.id.login_ratioButton_device_data_mode);
         btnDataManage = findViewById(R.id.login_ratioButton_datamanage_mode);
 
-        // 初始化环境
-        initProfile();
         // 查询网络状态
         httpManager.getNetworkStatus();
 
@@ -83,14 +91,6 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
             String password = edPassword.getText().toString();
             // 校验用户名和密码
             if (verifyUser(userName, password)) {
-//                if (AppStatic.isNetworkConnected) {
-//                    Intent intent = new Intent(LoginActivity.this, HealthRecordActivity.class);
-//                    startActivity(intent);
-//                } else {
-//                    // 弹出重连服务器的提示框
-//                    toastRetryConnectServer();
-//                }
-
                 if (btnDataManage.isChecked()) {
                     Intent intent = new Intent(LoginActivity.this, DataManageActivity.class);
                     startActivity(intent);
@@ -112,34 +112,6 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
 
         // 忘记密码
         tvForgetPassword.setOnClickListener(v -> SimpleDialog.show(LoginActivity.this, "忘记密码", "请联系QQ：1174520425", R.mipmap.help));
-    }
-
-
-    /**
-     * 初始化环境Profile(用于选择服务器路径)
-     */
-    private void initProfile() {
-        ImageView ivServerPathProfile = findViewById(R.id.login_image_server_path);
-        // 点击重庆大学的图标切换
-        ivServerPathProfile.setOnClickListener(view -> {
-            profileCounter++;
-            if (profileCounter % 6 == 0) {
-                AppStatic.serverPathEnum = ServerPathEnum.CLOUD_SERVER_PRE_PROD;
-                ToastUtil.toastSuccess(this, "当前网络:" + ServerPathEnum.CLOUD_SERVER_PRE_PROD.getInfoPath());
-                HttpManager.SERVER_INFO_PATH = AppStatic.serverPathEnum.getInfoPath();
-                HttpManager.SERVER_DATA_PATH = AppStatic.serverPathEnum.getDataPath();
-            } else if (profileCounter % 8 == 0) {
-                AppStatic.serverPathEnum = ServerPathEnum.LOCAL_WIFI;
-                ToastUtil.toastSuccess(this, "当前网络:" + ServerPathEnum.LOCAL_WIFI.getInfoPath());
-                HttpManager.SERVER_INFO_PATH = AppStatic.serverPathEnum.getInfoPath();
-                HttpManager.SERVER_DATA_PATH = AppStatic.serverPathEnum.getDataPath();
-            } else if (profileCounter % 10 == 0) {
-                AppStatic.serverPathEnum = ServerPathEnum.CLOUD_SERVER_PROD;
-                ToastUtil.toastSuccess(this, "当前网络:" + ServerPathEnum.CLOUD_SERVER_PROD.getInfoPath());
-                HttpManager.SERVER_INFO_PATH = AppStatic.serverPathEnum.getInfoPath();
-                HttpManager.SERVER_DATA_PATH = AppStatic.serverPathEnum.getDataPath();
-            }
-        });
     }
 
 
@@ -207,4 +179,21 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
     public void handleNetworkFailedMessage() {
         runOnUiThread(() -> ToastUtil.toast(LoginActivity.this, "网络异常", TastyToast.ERROR));
     }
+
+
+    /**
+     * 在SD卡的指定目录上创建文件
+     *
+     * @param fileName
+     */
+    public File createFile(String fileName) {
+        File file = new File(fileName);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
 }

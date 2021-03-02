@@ -43,6 +43,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -71,15 +72,18 @@
 
         <activity android:name=".activity.devicedata.evaluation.DeviceEvaluationActivity"/>
 
-        <activity android:name=".activity.devicedata.devicechoose.DeviceChooseActivity"/>
 
         <activity android:name=".activity.devicedata.mark.AddSomeOtherNewEventMarkActivity"/>
 
-        <activity android:name=".activity.heartblood.HeartBloodActivity"/>
+
+        <activity android:name=".activity.devicedata.devicechoose.DeviceChooseActivity"/>
 
         <activity android:name=".activity.datamanage.DataManageActivity"/>
 
+        <activity android:name=".activity.heartblood.HeartBloodActivity"/>
+
         <activity android:name=".activity.dataupload.DataUploadActivity"/>
+
 
     </application>
 

@@ -4,9 +4,11 @@ import com.nano.device.MedicalDevice;
 import com.nano.activity.devicedata.healthrecord.CollectionBasicInfoEntity;
 import com.nano.common.logger.LogLevelEnum;
 import com.nano.common.util.CommonUtil;
-import com.nano.http.ServerPathEnum;
+import com.nano.http.ServerIpEnum;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -39,12 +41,13 @@ public class AppStatic {
      * 默认的等级为普通信息
      */
     @Getter
-    public static LogLevelEnum logLevelEnum = LogLevelEnum.DEBUG;
+    public static LogLevelEnum logLevelEnum = LogLevelEnum.INFO;
 
     /**
      * 服务器默认路径(修改这个即可)
      */
-    public static ServerPathEnum serverPathEnum = ServerPathEnum.CLOUD_SERVER_PROD;
+    public static ServerIpEnum serverIpEnum = ServerIpEnum.LOCAL_WIFI;
+
 
     /**
      *  采集器本地IP地址
@@ -85,6 +88,11 @@ public class AppStatic {
     public static Map<Integer, MedicalDevice> medicalDeviceMap;
 
     /**
+     * 存放采集场次号的列表
+     */
+    public static List<Integer> collectionNumberList = new ArrayList<>();
+
+    /**
      * 调试信息日志数量
      */
     public static final int DEBUG_LOG_SIZE = 100;
@@ -99,7 +107,19 @@ public class AppStatic {
      */
     public static final int ERROR_LOG_SIZE = 100;
 
+
+
     // 关于数据管理的全局变量
     public static WorkingModeEnum workingMode = WorkingModeEnum.DATA_MANAGEMENT;
+
+    /**
+     * 伪身份ID
+     */
+    public static String pseudoId = "8912098GHSAIOJ87";
+
+    /**
+     * 治疗ID号
+     */
+    public static String treatmentId = "13A21378B";
 
 }

@@ -1,5 +1,6 @@
 package com.nano.device;
 
+import com.alibaba.fastjson.JSON;
 import com.nano.activity.devicedata.collection.interfaces.FragmentDataExchanger;
 import com.nano.activity.devicedata.evaluation.DeviceEvaluationTable;
 import com.nano.datacollection.DeviceData;
@@ -10,6 +11,9 @@ import com.nano.common.util.PersistUtil;
 import com.nano.http.HttpHandler;
 import com.nano.http.HttpMessage;
 import com.nano.http.HttpManager;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +28,8 @@ import lombok.NoArgsConstructor;
 public class MedicalDevice implements HttpHandler {
 
     private Logger logger = new Logger("[MedicalDevice]");
+
+    private static final long serialVersionUID = 233410313766289238L;
 
     /**
      * 判定仪器断线的时间长度
@@ -58,7 +64,7 @@ public class MedicalDevice implements HttpHandler {
     /**
      * 仪器使用年限
      */
-    private Integer serviceLife;
+    private Double serviceLife;
 
     /**
      * 接收端口
@@ -106,6 +112,12 @@ public class MedicalDevice implements HttpHandler {
      * 采集开关
      */
     private boolean collectorSwitchOn;
+
+    /**
+     * 服务器分配的采集序列号
+     */
+    private Integer collectionNumber = 0;
+
 
     /**
      * 采集的状态
@@ -187,7 +199,7 @@ public class MedicalDevice implements HttpHandler {
         // 只将正在采集状态的数据上传
         if (statusEnum == CollectionStatusEnum.COLLECTING) {
             // 使用解析器进行数据解析
-            DeviceData deviceData = dataParser.parseData(this.deviceCode, this.serialNumber, deviceRawData);
+            DeviceData deviceData = dataParser.parseData(this.deviceCode, this.collectionNumber, this.serialNumber, deviceRawData);
             // 打印解析后的数据实体
             receiveCounter++;
             // 进行仪器数据上传
@@ -229,7 +241,7 @@ public class MedicalDevice implements HttpHandler {
     @Override
     public void handleSuccessfulHttpMessage(HttpMessage message) {
         logger.debug(deviceName + "服务器响应:" + message);
-        switch (message.getCode()) {
+        switch (message.getPathEnum()) {
             // 收到仪器数据
             case POST_DEVICE_DATA:
                 successfulUploadCounter++;
@@ -245,5 +257,38 @@ public class MedicalDevice implements HttpHandler {
 
     @Override
     public void handleNetworkFailedMessage() {
+    }
+
+
+    /**
+     * 构造用于传输给服务器的医疗仪器信息
+     */
+    public String getMedicalDeviceInfoForServer() {
+        return JSON.toJSONString(new InfoMedicalDevice(deviceCode, serialNumber, serviceLife));
+    }
+
+
+    /**
+     * 用于上传到服务器的仪器信息类
+     * @author cz
+     */
+    @Data
+    private static class InfoMedicalDevice implements Serializable {
+
+        private static final long serialVersionUID = 233410313766289238L;
+        // 仪器号
+        private Integer deviceCode;
+        // 序列号
+        private String serialNumber;
+        // 生产日期
+        private LocalDate produceDate;
+        // 服务年限
+        private Double serviceLife;
+
+        public InfoMedicalDevice(Integer deviceCode, String serialNumber, Double serviceLife) {
+            this.deviceCode = deviceCode;
+            this.serialNumber = serialNumber;
+            this.serviceLife = serviceLife;
+        }
     }
 }

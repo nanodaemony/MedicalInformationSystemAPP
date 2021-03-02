@@ -182,6 +182,24 @@ public class DeviceUtil {
         return medicalDeviceMap.get(deviceCode);
     }
 
+
+    /**
+     * 获取指定仪器信息实体
+     *
+     * @param collectionNumber 采集顺序号
+     * @return 仪器信息
+     */
+    public static MedicalDevice getMedicalDeviceByCollectionNumber(Integer collectionNumber) {
+
+        for (MedicalDevice device : medicalDeviceMap.values()) {
+            if (collectionNumber.equals(device.getCollectionNumber())) {
+                return device;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * 获取指定仪器信息实体
      *

@@ -7,10 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.nano.R;
 import com.nano.datacollection.parsedata.entity.DataPuKe;
 import com.nano.activity.devicedata.collection.interfaces.FragmentDataExchanger;
@@ -34,6 +33,13 @@ public class FragmentPuKe extends Fragment implements FragmentDataExchanger {
 
 
     /**
+     * 仪器图片
+     */
+    private ImageView ivDeviceImage;
+    private TextView tvControlMessage;
+
+
+    /**
      * 采集状态
      */
     private TextView tvCollectionStatus;
@@ -54,11 +60,6 @@ public class FragmentPuKe extends Fragment implements FragmentDataExchanger {
      */
     private MedicalDevice device;
 
-    /**
-     * 开始与停止按钮
-     */
-    private LinearLayout ivCollectionStart;
-    private LinearLayout ivCollectionStop;
 
     private TextView tvDataAi;
     private TextView tvDataEmg;
@@ -73,20 +74,18 @@ public class FragmentPuKe extends Fragment implements FragmentDataExchanger {
         tvReceiveCounter = root.findViewById(R.id.collection_receive_counter);
         tvSuccessfulUpdateCounter = root.findViewById(R.id.successful_update_counter);
 
-        SwipeLayout swipeLayout = root.findViewById(R.id.device_collection_swiplayout);
-        // 控制采集开始按钮
-        ivCollectionStart = root.findViewById(R.id.device_collection_start);
-        // 控制采集结束
-        ivCollectionStop = root.findViewById(R.id.device_collection_stop);
+        // 仪器图片
+        ivDeviceImage = root.findViewById(R.id.device_collection_device_image);
+        // 控制信息
+        tvControlMessage = root.findViewById(R.id.device_collection_control_message);
+        ivDeviceImage.setOnClickListener(view -> {
+            if (device.getStatusEnum() == CollectionStatusEnum.WAITING_START) {
+                handler.handleDeviceStartCollection(new MessageEntity(device.getDeviceCode()));
+            } else if (device.getStatusEnum() == CollectionStatusEnum.COLLECTING) {
+                handler.handleDeviceStopCollection(new MessageEntity(device.getDeviceCode()));
+            } else if (device.getStatusEnum() == CollectionStatusEnum.FINISHED) {
 
-        // 控制采集流程(基体逻辑判断交给Activity进行)
-        ivCollectionStart.setOnClickListener(view -> {
-            handler.handleDeviceStartCollection(new MessageEntity(device.getDeviceCode()));
-            swipeLayout.close(true);
-        });
-        ivCollectionStop.setOnClickListener(view -> {
-            handler.handleDeviceStopCollection(new MessageEntity(device.getDeviceCode()));
-            swipeLayout.close(true);
+            }
         });
 
         // 获取当前操作的仪器信息
@@ -109,20 +108,21 @@ public class FragmentPuKe extends Fragment implements FragmentDataExchanger {
     @SuppressLint("ResourceAsColor")
     @Override
     public void updateCollectionStatus(CollectionStatusEnum status) {
-        if (status == CollectionStatusEnum.COLLECTING) {
+        // 此时说明已经成功请求到采集场次号
+        if (status == CollectionStatusEnum.WAITING_START) {
+            tvControlMessage.setVisibility(View.VISIBLE);
+            tvControlMessage.setTextColor(this.getContext().getColor(R.color.collection_status_finished));
+        } else if (status == CollectionStatusEnum.COLLECTING) {
             tvCollectionStatus.setText(status.getMessage());
             // 如果是正在采集则修改颜色为红色
             tvCollectionStatus.setTextColor(this.getContext().getColor(R.color.collection_status_collecting));
-            // 隐藏开始采集图标
-            ivCollectionStart.setVisibility(View.GONE);
-            // 显示结束图标
-            ivCollectionStop.setVisibility(View.VISIBLE);
+            tvControlMessage.setText("点击完成采集");
+            tvControlMessage.setTextColor(this.getContext().getColor(R.color.collection_status_collecting));
         } else if (status == CollectionStatusEnum.FINISHED) {
             tvCollectionStatus.setText(status.getMessage());
             // 如果是完成采集则修改颜色为绿色
             tvCollectionStatus.setTextColor(this.getContext().getColor(R.color.collection_status_finished));
-            // 隐藏结束采集图标(此时只剩下放弃采集图标)
-            ivCollectionStop.setVisibility(View.GONE);
+            tvControlMessage.setText("点击放弃采集");
         }
     }
 

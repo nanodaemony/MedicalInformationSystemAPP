@@ -7,7 +7,7 @@ package com.nano;
  * @author: nano
  * @date: 2021/2/23 15:11
  */
-public enum  WorkingModeEnum {
+public enum WorkingModeEnum {
 
     DATA_MANAGEMENT,
 

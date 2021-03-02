@@ -3,8 +3,6 @@
 buildscript {
     
     repositories {
-        // 生成APK失败时添加下面的仓库
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
         // 用于实现类似于苹果的按钮切换
@@ -30,7 +28,6 @@ allprojects {
         mavenCentral()
     }
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

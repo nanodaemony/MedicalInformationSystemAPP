@@ -88,7 +88,7 @@ public class MarkEvent {
     /**
      * 手术场次号
      */
-    private Integer operationNumber;
+    private String collectionNumberList;
 
 
     /**

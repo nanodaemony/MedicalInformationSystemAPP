@@ -19,7 +19,7 @@ public interface DeviceDataParser {
      * @param deviceOriginData 原始数据
      * @return 构造的数据实体
      */
-    DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData);
+    DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData);
 
     /**
      * 验证数据是否合格

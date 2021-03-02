@@ -225,7 +225,6 @@ public class MarkEventActivity extends Activity implements HttpHandler {
                 if (keyWord.length() != 0) {
 
                     httpManager.getMatchedMarkEventList(keyWord);
-
                 } else {
                     // 直接置空列表
                     refreshEventList(new ArrayList<>());
@@ -347,6 +346,9 @@ public class MarkEventActivity extends Activity implements HttpHandler {
                     currentChooseEvent.setMarkTime(markTime.toInstant(ZoneOffset.of("+8")).toEpochMilli());
                 }
 
+                // 设置采集场次号列表
+                currentChooseEvent.setCollectionNumberList(MarkEventUtil.getCollectionNumberList());
+
                 logger.info("添加标记:" + currentChooseEvent.toString());
 
                 // 加入到当前选择的列表总
@@ -354,7 +356,6 @@ public class MarkEventActivity extends Activity implements HttpHandler {
 
                 // 刷新已选择事件列表
                 refreshChooseResultList(MarkEventUtil.markEventList);
-
                 // 上传当前的标记列表
                 updateEventMarkList();
                 // 刷新界面
@@ -385,9 +386,9 @@ public class MarkEventActivity extends Activity implements HttpHandler {
     @Override
     public void handleSuccessfulHttpMessage(HttpMessage message) {
 
-        switch (message.getCode()) {
+        switch (message.getPathEnum()) {
             // 查询常用列表
-            case QUERY_OFTEN_USED_MARK_EVENT_LIST:
+            case GET_OFTEN_USE_MARK_EVENT_LIST:
                 // 解析到当前查询结果列表
                 currentQueryList = JSON.parseArray(message.getData(), MarkEvent.class);
                 // 在这里对事件进行初始化
@@ -400,7 +401,7 @@ public class MarkEventActivity extends Activity implements HttpHandler {
                 break;
 
             // 查询匹配列表
-            case QUERY_MATCHED_MARK_EVENT_LIST_BY_KEY_WORD:
+            case SEARCH_MATCH_MARK_EVENT_LIST:
                 // 解析到当前查询结果列表
                 currentQueryList = JSON.parseArray(message.getData(), MarkEvent.class);
                 // 在这里对事件进行初始化
@@ -412,29 +413,21 @@ public class MarkEventActivity extends Activity implements HttpHandler {
                 runOnUiThread(() -> refreshEventList(matchEventList));
                 break;
 
-                // 成功上传事件信息
-            case POST_OPERATION_MARK_EVENT:
+            // 成功上传事件信息
+            case OPERATION_MARK_EVENT_ADD:
                 // 解析上传成功的标记事件的唯一代号
-                List<String> uniqueNumberList = JSON.parseArray(message.getData(), String.class);
-                for (String uniqueNumber : uniqueNumberList) {
-                    for (MarkEvent event : MarkEventUtil.markEventList) {
-                        // 匹配上则标记为已更新
-                        if (event.getUniqueNumber().equals(uniqueNumber)) {
-                            event.setUpdated(true);
-                        }
+                for (MarkEvent event : MarkEventUtil.markEventList) {
+                    if (event.getUniqueNumber().equals(message.getData())) {
+                        event.setUpdated(true);
                     }
                 }
                 // 刷新一下结果列表
                 runOnUiThread(() -> refreshChooseResultList(MarkEventUtil.markEventList));
                 break;
 
-                // 表示已经成功新增了一条不存在的标记事件
-            case POST_ADD_SOME_OTHER_NEW_MARK_EVENT:
 
-                break;
-
-                // 更新标记事件的时间成功
-            case POST_MODIFY_EVENT_MARK_TIME:
+            // 更新标记事件的时间成功
+            case OPERATION_MARK_EVENT_UPDATE:
                 logger.info("成功同步时间:" + message.getData());
                 runOnUiThread(() -> {
                     ToastUtil.toast(MarkEventActivity.this, "同步时间成功", TastyToast.SUCCESS);
@@ -442,8 +435,8 @@ public class MarkEventActivity extends Activity implements HttpHandler {
                 });
                 break;
 
-                // 删除标记事件成功
-            case DELETE_A_MARK_EVENT:
+            // 删除标记事件成功
+            case OPERATION_MARK_EVENT_DELETE:
                 runOnUiThread(() -> {
                     refreshChooseResultList(MarkEventUtil.markEventList);
                     ToastUtil.toast(MarkEventActivity.this, "删除成功", TastyToast.SUCCESS);
@@ -519,10 +512,10 @@ public class MarkEventActivity extends Activity implements HttpHandler {
         for (MarkEvent event : MarkEventUtil.markEventList) {
             if (!event.isUpdated()) {
                 updateList.add(event);
+                logger.info("当前上传标记:" + event.toString());
+                httpManager.postMarkEvent(event);
             }
         }
-        logger.info("当前上传标记:" + JSON.toJSONString(updateList));
-        httpManager.postMarkEvent(JSON.toJSONString(updateList));
     }
 
 
@@ -557,9 +550,10 @@ public class MarkEventActivity extends Activity implements HttpHandler {
 
     /**
      * 弹出显示修改事件的弹窗
+     *
      * @param position 点击条目的位置
      */
-    private void showModifyMarkEventDialog(final int position){
+    private void showModifyMarkEventDialog(final int position) {
         // 弹出操作的弹窗 新建Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(MarkEventActivity.this);
         LayoutInflater inflater = LayoutInflater.from(MarkEventActivity.this);
@@ -581,12 +575,12 @@ public class MarkEventActivity extends Activity implements HttpHandler {
 
         // 改变时间的按钮
         tvChangeTime.setOnClickListener(v1 -> {
-            if (position == 0){
+            if (position == 0) {
                 ToastUtil.toast(MarkEventActivity.this, "当前是第一条标记无法同步时间", TastyToast.WARNING);
             } else {
                 // 设置时间
                 MarkEventUtil.markEventList.get(position).setMarkTime(MarkEventUtil.markEventList.get(position - 1).getMarkTime());
-                httpManager.postModifyMarkEventTime(JSON.toJSONString(MarkEventUtil.markEventList.get(position)));
+                httpManager.postModifyMarkEventTime(MarkEventUtil.markEventList.get(position));
             }
             dialog.dismiss();           // 关掉弹窗
         });
@@ -594,7 +588,7 @@ public class MarkEventActivity extends Activity implements HttpHandler {
         // 删除标记的按钮
         tvDeleteMark.setOnClickListener(arg0 -> {
             // 上传删除请求
-            httpManager.postDeleteMarkEvent(JSON.toJSONString(MarkEventUtil.markEventList.get(position)));
+            httpManager.postDeleteMarkEvent(MarkEventUtil.markEventList.get(position));
             MarkEventUtil.markEventList.remove(position);
             dialog.dismiss();
             // 更新显示

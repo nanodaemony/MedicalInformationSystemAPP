@@ -13,12 +13,9 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class ParamCollector {
+public class ParamPad {
 
-    /**
-     * 请求码
-     */
-    private int requestCode;
+    private static final long serialVersionUID = 233410313723289238L;
 
     /**
      * MAC地址
@@ -28,7 +25,7 @@ public class ParamCollector {
     /**
      * 手术场次号
      */
-    private final int operationNumber = AppStatic.operationNumber;
+    private Integer collectionNumber;
 
     /**
      * 数据
@@ -43,18 +40,16 @@ public class ParamCollector {
         return JSON.toJSONString(this);
     }
 
-
-    /**
-     * 传入类型 其余默认值
-     * @param requestCode type
-     */
-    public ParamCollector(int requestCode) {
-        this.requestCode = requestCode;
+    public ParamPad(Integer collectionNumber) {
+        this.collectionNumber = collectionNumber;
     }
 
+    public ParamPad(String data) {
+        this.data = data;
+    }
 
-    public ParamCollector(int requestCode, String data) {
-        this.requestCode = requestCode;
+    public ParamPad(Integer collectionNumber, String data) {
+        this.collectionNumber = collectionNumber;
         this.data = data;
     }
 }

@@ -179,7 +179,17 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="20dp" />
+
+<!--    <TextView-->
+<!--        android:gravity="center"-->
+<!--        android:text="尚未登录"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
 
     <!--登录按钮-->

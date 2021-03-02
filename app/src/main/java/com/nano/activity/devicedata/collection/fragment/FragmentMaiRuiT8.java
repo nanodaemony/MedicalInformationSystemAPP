@@ -6,16 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
 import com.nano.R;
-import com.nano.datacollection.parsedata.DataCons;
-import com.nano.datacollection.parsedata.entity.DataMaiRuiT8;
+import com.nano.activity.devicedata.collection.MessageEntity;
 import com.nano.activity.devicedata.collection.interfaces.FragmentDataExchanger;
 import com.nano.activity.devicedata.collection.interfaces.FragmentOperationHandler;
-import com.nano.activity.devicedata.collection.MessageEntity;
+import com.nano.datacollection.parsedata.DataCons;
+import com.nano.datacollection.parsedata.entity.DataMaiRuiT8;
 import com.nano.datacollection.CollectionStatusEnum;
 import com.nano.device.DeviceEnum;
 import com.nano.device.DeviceUtil;
@@ -31,6 +30,12 @@ import androidx.annotation.NonNull;
  * @date: 2020/12/29 13:46
  */
 public class FragmentMaiRuiT8 extends android.support.v4.app.Fragment implements FragmentDataExchanger {
+
+    /**
+     * 仪器图片
+     */
+    private ImageView ivDeviceImage;
+    private TextView tvControlMessage;
 
     /**
      * 采集状态
@@ -55,11 +60,6 @@ public class FragmentMaiRuiT8 extends android.support.v4.app.Fragment implements
     private MedicalDevice device;
 
 
-    /**
-     * 开始与停止按钮
-     */
-    private LinearLayout ivCollectionStart;
-    private LinearLayout ivCollectionStop;
 
     private TextView tvDataEcgHr;
     private TextView tvDataResp;
@@ -78,21 +78,20 @@ public class FragmentMaiRuiT8 extends android.support.v4.app.Fragment implements
         tvCollectionStatus = root.findViewById(R.id.device_collection_status);
         tvReceiveCounter = root.findViewById(R.id.collection_receive_counter);
         tvSuccessfulUpdateCounter = root.findViewById(R.id.successful_update_counter);
-        SwipeLayout swipeLayout = root.findViewById(R.id.device_collection_swiplayout);
-        // 控制采集开始按钮
-        ivCollectionStart = root.findViewById(R.id.device_collection_start);
-        // 控制采集结束
-        ivCollectionStop = root.findViewById(R.id.device_collection_stop);
+        // 仪器图片
+        ivDeviceImage = root.findViewById(R.id.device_collection_device_image);
+        // 控制信息
+        tvControlMessage = root.findViewById(R.id.device_collection_control_message);
+        ivDeviceImage.setOnClickListener(view -> {
+            if (device.getStatusEnum() == CollectionStatusEnum.WAITING_START) {
+                handler.handleDeviceStartCollection(new MessageEntity(device.getDeviceCode()));
+            } else if (device.getStatusEnum() == CollectionStatusEnum.COLLECTING) {
+                handler.handleDeviceStopCollection(new MessageEntity(device.getDeviceCode()));
+            } else if (device.getStatusEnum() == CollectionStatusEnum.FINISHED) {
 
-        // 控制采集流程(基体逻辑判断交给Activity进行)
-        ivCollectionStart.setOnClickListener(view -> {
-            handler.handleDeviceStartCollection(new MessageEntity(device.getDeviceCode()));
-            swipeLayout.close(true);
+            }
         });
-        ivCollectionStop.setOnClickListener(view -> {
-            handler.handleDeviceStopCollection(new MessageEntity(device.getDeviceCode()));
-            swipeLayout.close(true);
-        });
+
 
         // 获取当前操作的仪器信息
         device = DeviceUtil.getMedicalDevice(DeviceEnum.MAI_RUI_T8);
@@ -117,20 +116,21 @@ public class FragmentMaiRuiT8 extends android.support.v4.app.Fragment implements
     @SuppressLint("ResourceAsColor")
     @Override
     public void updateCollectionStatus(CollectionStatusEnum status) {
-        if (status == CollectionStatusEnum.COLLECTING) {
+        // 此时说明已经成功请求到采集场次号
+        if (status == CollectionStatusEnum.WAITING_START) {
+            tvControlMessage.setVisibility(View.VISIBLE);
+            tvControlMessage.setTextColor(this.getContext().getColor(R.color.collection_status_finished));
+        } else if (status == CollectionStatusEnum.COLLECTING) {
             tvCollectionStatus.setText(status.getMessage());
             // 如果是正在采集则修改颜色为红色
             tvCollectionStatus.setTextColor(this.getContext().getColor(R.color.collection_status_collecting));
-            // 隐藏开始采集图标
-            ivCollectionStart.setVisibility(View.GONE);
-            // 显示结束图标
-            ivCollectionStop.setVisibility(View.VISIBLE);
+            tvControlMessage.setText("点击完成采集");
+            tvControlMessage.setTextColor(this.getContext().getColor(R.color.collection_status_collecting));
         } else if (status == CollectionStatusEnum.FINISHED) {
             tvCollectionStatus.setText(status.getMessage());
             // 如果是完成采集则修改颜色为绿色
             tvCollectionStatus.setTextColor(this.getContext().getColor(R.color.collection_status_finished));
-            // 隐藏结束采集图标(此时只剩下放弃采集图标)
-            ivCollectionStop.setVisibility(View.GONE);
+            tvControlMessage.setText("点击放弃采集");
         }
     }
 
@@ -144,43 +144,41 @@ public class FragmentMaiRuiT8 extends android.support.v4.app.Fragment implements
     @Override
     public void updateReceiveCounterAndDeviceData(Integer receiveCounter, Object dataObject) {
         this.getActivity().runOnUiThread(() -> {
-            if (receiveCounter % 2 == 0) {
-                tvReceiveCounter.setText("" + receiveCounter);
-                // 转换为数据实体
-                DataMaiRuiT8 dataMaiRuiT8 = (DataMaiRuiT8) dataObject;
-                if (dataMaiRuiT8.getEcgHeartRate() != DataCons.INVALID_DATA_INTEGER) {
-                    tvDataEcgHr.setText(dataMaiRuiT8.getEcgHeartRate() + " bmp");
-                }
-                if (dataMaiRuiT8.getRespRespirationRate() != DataCons.INVALID_DATA_INTEGER) {
-                    tvDataResp.setText(dataMaiRuiT8.getRespRespirationRate() + "");
-                }
-                if (dataMaiRuiT8.getSpo2PulseRate() != DataCons.INVALID_DATA_INTEGER) {
-                    tvDataSpo2Pr.setText("" + dataMaiRuiT8.getSpo2PulseRate());
-                }
-                if (dataMaiRuiT8.getArtIbpMean() != DataCons.INVALID_DATA_DOUBLE) {
-                    tvDataArt.setText(
-                            dataMaiRuiT8.getArtIbpSystolic() + " mmHg\n"
-                                    + dataMaiRuiT8.getArtIbpDiastolic() + " mmHg\n("
-                                    + dataMaiRuiT8.getArtIbpMean() + ") mmHg");
-                }
+            tvReceiveCounter.setText("" + receiveCounter);
+            // 转换为数据实体
+            DataMaiRuiT8 dataMaiRuiT8 = (DataMaiRuiT8) dataObject;
+            if (dataMaiRuiT8.getEcgHeartRate() != DataCons.INVALID_DATA_INTEGER) {
+                tvDataEcgHr.setText(dataMaiRuiT8.getEcgHeartRate() + " bmp");
+            }
+            if (dataMaiRuiT8.getRespRespirationRate() != DataCons.INVALID_DATA_INTEGER) {
+                tvDataResp.setText(dataMaiRuiT8.getRespRespirationRate() + "");
+            }
+            if (dataMaiRuiT8.getSpo2PulseRate() != DataCons.INVALID_DATA_INTEGER) {
+                tvDataSpo2Pr.setText("" + dataMaiRuiT8.getSpo2PulseRate());
+            }
+            if (dataMaiRuiT8.getArtIbpMean() != DataCons.INVALID_DATA_DOUBLE) {
+                tvDataArt.setText(
+                        dataMaiRuiT8.getArtIbpSystolic() + " mmHg\n"
+                                + dataMaiRuiT8.getArtIbpDiastolic() + " mmHg\n("
+                                + dataMaiRuiT8.getArtIbpMean() + ") mmHg");
+            }
 
-                if (dataMaiRuiT8.getNibpDiastolic() != DataCons.INVALID_DATA_DOUBLE) {
-                    tvDataNibp.setText(dataMaiRuiT8.getNibpSystolic() + " mmHg\n" +
-                            dataMaiRuiT8.getNibpDiastolic() + " mmHg\n("
-                            + dataMaiRuiT8.getNibpMean() + ") mmHg");
-                }
-                if (dataMaiRuiT8.getTempTemperature1() != DataCons.INVALID_DATA_DOUBLE) {
-                    tvDataTemp.setText(dataMaiRuiT8.getTempTemperature1() + " ℃\n" +
-                            dataMaiRuiT8.getTempTemperature2() + " ℃\n" +
-                            dataMaiRuiT8.getTempTemperatureDifference() + " ℃");
-                }
-                if (dataMaiRuiT8.getSpo2PercentOxygenSaturation() != DataCons.INVALID_DATA_INTEGER) {
-                    tvDataSpo2.setText(dataMaiRuiT8.getSpo2PercentOxygenSaturation() + " %");
-                }
+            if (dataMaiRuiT8.getNibpDiastolic() != DataCons.INVALID_DATA_DOUBLE) {
+                tvDataNibp.setText(dataMaiRuiT8.getNibpSystolic() + " mmHg\n" +
+                        dataMaiRuiT8.getNibpDiastolic() + " mmHg\n("
+                        + dataMaiRuiT8.getNibpMean() + ") mmHg");
+            }
+            if (dataMaiRuiT8.getTempTemperature1() != DataCons.INVALID_DATA_DOUBLE) {
+                tvDataTemp.setText(dataMaiRuiT8.getTempTemperature1() + " ℃\n" +
+                        dataMaiRuiT8.getTempTemperature2() + " ℃\n" +
+                        dataMaiRuiT8.getTempTemperatureDifference() + " ℃");
+            }
+            if (dataMaiRuiT8.getSpo2PercentOxygenSaturation() != DataCons.INVALID_DATA_INTEGER) {
+                tvDataSpo2.setText(dataMaiRuiT8.getSpo2PercentOxygenSaturation() + " %");
+            }
 
-                if (dataMaiRuiT8.getSpo2PulseRate() != DataCons.INVALID_DATA_INTEGER) {
-                    tvDataSpo2Pr.setText(dataMaiRuiT8.getSpo2PulseRate() + " bpm");
-                }
+            if (dataMaiRuiT8.getSpo2PulseRate() != DataCons.INVALID_DATA_INTEGER) {
+                tvDataSpo2Pr.setText(dataMaiRuiT8.getSpo2PulseRate() + " bpm");
             }
 
         });

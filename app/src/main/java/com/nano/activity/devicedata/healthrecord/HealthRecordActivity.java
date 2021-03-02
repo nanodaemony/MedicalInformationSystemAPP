@@ -14,15 +14,15 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.nano.activity.devicedata.devicechoose.DeviceChooseActivity;
-import com.nano.common.logger.Logger;
-import com.nano.AppStatic;
-import com.nano.common.util.ToastUtil;
 import com.nano.activity.devicedata.healthrecord.watcher.AdmissionIdWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.HospitalOperationNumberWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.PatientAgeWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.PatientHeightWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.PatientIdWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.PatientWeightWatcher;
+import com.nano.common.logger.Logger;
+import com.nano.AppStatic;
+import com.nano.common.util.ToastUtil;
 import com.nano.R;
 import com.nano.common.logger.LoggerFactory;
 import com.sdsmdg.tastytoast.TastyToast;

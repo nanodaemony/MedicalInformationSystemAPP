@@ -33,8 +33,6 @@
                 android:textSize="16sp" />
         </android.support.v7.widget.Toolbar>
 
-
-
         <!--可能需要修改这一部分的高度值来满足界面需求-->
         <ScrollView
             android:layout_width="match_parent"

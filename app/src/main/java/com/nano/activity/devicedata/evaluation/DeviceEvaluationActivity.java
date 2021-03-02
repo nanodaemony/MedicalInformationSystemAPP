@@ -30,7 +30,6 @@ import com.nano.http.HttpMessage;
 import com.nano.http.HttpManager;
 import com.sdsmdg.tastytoast.TastyToast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,15 +100,15 @@ public class DeviceEvaluationActivity extends AppCompatActivity implements HttpH
                 logger.info("已完成仪器评价信息:" + entry.getKey().getDeviceEvaluationTable().toString());
             }
 
-            List<DeviceEvaluationTable> evaluationTableList = new ArrayList<>();
             for (MedicalDevice device : DeviceUtil.getUsedDeviceList()) {
                 // 只添加已经上传的
                 if (!device.getDeviceEvaluationTable().isEvaluated()) {
-                    evaluationTableList.add(device.getDeviceEvaluationTable());
+
+                    // 上传标记信息
+                    httpManager.postDeviceEvaluationInfo(device.getDeviceEvaluationTable());
                 }
             }
-            // 上传标记信息
-            httpManager.postDeviceEvaluationInfo(JSON.toJSONString(evaluationTableList));
+
 
         });
 

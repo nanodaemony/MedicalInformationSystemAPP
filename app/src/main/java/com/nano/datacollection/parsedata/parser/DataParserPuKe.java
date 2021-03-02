@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.nano.common.logger.Logger;
 import com.nano.datacollection.parsedata.DataCons;
 import com.nano.datacollection.parsedata.entity.DataPuKe;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DeviceDataParser;
 
@@ -20,9 +20,10 @@ public class DataParserPuKe implements DeviceDataParser {
     private static Logger logger = new Logger("ParsePuKe");
 
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
         DataPuKe dataPuKe = new DataPuKe();
         dataPuKe.setSerialNumber(serialNumber);
+        dataPuKe.setCollectionNumber(collectionNumber);
         if (verifyData(deviceOriginData)) {
             String[] values = deviceOriginData.split(" ");
             int ai = Integer.parseInt(values[3], 16);
@@ -55,7 +56,7 @@ public class DataParserPuKe implements DeviceDataParser {
         }
         String dataString = JSON.toJSONString(dataPuKe);
         // 返回解析好的数据
-        return new DeviceData(deviceCode, dataPuKe, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataPuKe, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
     @Override

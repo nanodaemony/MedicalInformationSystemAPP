@@ -57,12 +57,28 @@ public class MarkEventUtil {
         newEvent.setMarkMainType(oldEvent.getMarkMainType());
         newEvent.setMarkSubType(oldEvent.getMarkSubType());
         newEvent.setMarkEvent(oldEvent.getMarkEvent());
-        newEvent.setOperationNumber(AppStatic.operationNumber);
+        newEvent.setCollectionNumberList(getCollectionNumberList());
         newEvent.setUniqueNumber("" + AppStatic.operationNumber + System.currentTimeMillis());
         newEvent.setUpdated(false);
         return newEvent;
     }
 
+
+    /**
+     * 返回本次采集场次号列表字符串
+     */
+    public static String getCollectionNumberList() {
+
+        StringBuilder builder = new StringBuilder();
+        for (Integer number : AppStatic.collectionNumberList) {
+            builder.append(number).append("#");
+        }
+        String res = builder.toString();
+        if (res.length() > 1) {
+            return res.substring(0, res.length() - 1);
+        }
+        return res;
+    }
 
     /**
      * 获取还没有上传的标记事件

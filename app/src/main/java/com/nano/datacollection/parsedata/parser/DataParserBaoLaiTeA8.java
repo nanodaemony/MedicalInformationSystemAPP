@@ -5,7 +5,7 @@ import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DataCons;
 import com.nano.datacollection.parsedata.DeviceDataParser;
 import com.nano.datacollection.parsedata.entity.DataBaoLaiTeA8;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +43,11 @@ public class DataParserBaoLaiTeA8 implements DeviceDataParser {
      * @return 数据
      */
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
 
         DataBaoLaiTeA8 dataBaoLaiTe = new DataBaoLaiTeA8();
         dataBaoLaiTe.setSerialNumber(serialNumber);
+        dataBaoLaiTe.setCollectionNumber(collectionNumber);
 
         if (verifyData(deviceOriginData)) {
 
@@ -100,7 +101,7 @@ public class DataParserBaoLaiTeA8 implements DeviceDataParser {
         }
 
         String dataString = JSON.toJSONString(dataBaoLaiTe);
-        return new DeviceData(deviceCode, dataBaoLaiTe, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataBaoLaiTe, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
     /**

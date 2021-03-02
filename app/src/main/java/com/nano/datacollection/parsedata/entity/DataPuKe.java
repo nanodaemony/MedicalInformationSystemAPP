@@ -15,9 +15,9 @@ import lombok.Data;
 public class DataPuKe {
 
     /**
-     * 仪器号
+     * 采集场次号
      */
-    private Integer operationNumber = AppStatic.operationNumber;
+    private Integer collectionNumber;
 
     /**
      * 序列号

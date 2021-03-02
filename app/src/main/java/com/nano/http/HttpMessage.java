@@ -14,24 +14,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HttpMessage {
 
-    private RequestCodeEnum code;
+    private ServerPathEnum pathEnum;
 
     private String data;
 
-    public HttpMessage(RequestCodeEnum code, String data) {
-        this.code = code;
+    private String data2;
+
+    public HttpMessage(ServerPathEnum pathEnum) {
+        this.pathEnum = pathEnum;
+    }
+
+    public HttpMessage(ServerPathEnum pathEnum, String data) {
+        this.pathEnum = pathEnum;
         this.data = data;
     }
 
-    public HttpMessage(RequestCodeEnum code) {
-        this.code = code;
+    public HttpMessage(ServerPathEnum pathEnum, String data, String data2) {
+        this.pathEnum = pathEnum;
+        this.data = data;
+        this.data2 = data2;
     }
 
-    @Override
-    public String toString() {
-        return "HttpMessage{" +
-                "code=" + code +
-                ", data='" + data + '\'' +
-                '}';
+    public HttpMessage(String data) {
+        this.data = data;
     }
+
 }

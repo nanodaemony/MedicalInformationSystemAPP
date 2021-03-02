@@ -56,7 +56,6 @@ public class GlobalApplication extends Application {
      * 初始化工作
      */
     private void basicInit() {
-        System.out.println("Happy");
         shareMap = getSharedPreferences("CommonData", MODE_PRIVATE);
         shareEditor = shareMap.edit();
         // 读取配置文件
@@ -67,7 +66,7 @@ public class GlobalApplication extends Application {
             e.printStackTrace();
         }
         boolean debug = Boolean.parseBoolean(AppStatic.properties.getProperty("Debug"));
-        // logger.info(debug + "");
+        //logger.info(debug + "");s
     }
 
     /**

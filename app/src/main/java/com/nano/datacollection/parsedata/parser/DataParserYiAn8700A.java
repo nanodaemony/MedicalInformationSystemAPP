@@ -5,7 +5,7 @@ import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DeviceDataParser;
 import com.nano.datacollection.parsedata.DataParseUtils;
 import com.nano.datacollection.parsedata.entity.DataYiAn8700A;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 
 /**
  * Description: 宜安8700A的数据解析器
@@ -23,10 +23,11 @@ public class DataParserYiAn8700A implements DeviceDataParser {
     private static final String HL7_END_FLAG = "1C0D";
 
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
 
         DataYiAn8700A dataYiAn8700A = new DataYiAn8700A();
         dataYiAn8700A.setSerialNumber(serialNumber);
+        dataYiAn8700A.setCollectionNumber(collectionNumber);
 
         // 将数据切分为4条进行分别解析
         String[] dataBlocks = deviceOriginData.split("%");
@@ -35,7 +36,7 @@ public class DataParserYiAn8700A implements DeviceDataParser {
         }
         String dataString = JSON.toJSONString(dataYiAn8700A);
         // 返回解析好的数据
-        return new DeviceData(deviceCode, dataYiAn8700A, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataYiAn8700A, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
 

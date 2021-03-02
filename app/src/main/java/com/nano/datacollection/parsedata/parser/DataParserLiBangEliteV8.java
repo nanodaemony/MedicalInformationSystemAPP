@@ -3,7 +3,7 @@ package com.nano.datacollection.parsedata.parser;
 import com.alibaba.fastjson.JSON;
 import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.parsedata.DeviceDataParser;
-import com.nano.datacollection.parsedata.UpdateDataEntity;
+import com.nano.datacollection.parsedata.ParamDeviceDataPad;
 import com.nano.datacollection.parsedata.entity.DataLiBangEliteV8;
 
 /**
@@ -24,10 +24,11 @@ public class DataParserLiBangEliteV8 implements DeviceDataParser {
      * @return 数据
      */
     @Override
-    public DeviceData parseData(int deviceCode, String serialNumber, String deviceOriginData) {
+    public DeviceData parseData(int deviceCode, Integer collectionNumber, String serialNumber, String deviceOriginData) {
 
         DataLiBangEliteV8 dataLiBangEliteV8 = new DataLiBangEliteV8();
         dataLiBangEliteV8.setSerialNumber(serialNumber);
+        dataLiBangEliteV8.setCollectionNumber(collectionNumber);
 
         if (verifyData(deviceOriginData)) {
             // 获取真实数据
@@ -59,7 +60,7 @@ public class DataParserLiBangEliteV8 implements DeviceDataParser {
 
         String dataString = JSON.toJSONString(dataLiBangEliteV8);
         // 返回解析好的数据
-        return new DeviceData(deviceCode, dataLiBangEliteV8, JSON.toJSONString(new UpdateDataEntity(deviceCode, dataString)));
+        return new DeviceData(deviceCode, dataLiBangEliteV8, JSON.toJSONString(new ParamDeviceDataPad(deviceCode, collectionNumber, dataString)));
     }
 
 

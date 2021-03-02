@@ -1,13 +1,7 @@
 package com.nano.activity.datamanage;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.card.MaterialCardView;
-import android.support.design.chip.Chip;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,49 +12,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.nano.AppStatic;
 import com.nano.R;
-import com.nano.activity.devicedata.collection.DataCollectionActivity;
-import com.nano.activity.devicedata.collection.DataCollectionUtils;
-import com.nano.activity.devicedata.collection.DeviceUnity;
-import com.nano.activity.devicedata.collection.MessageEntity;
-import com.nano.activity.devicedata.collection.TestUtil;
-import com.nano.activity.devicedata.evaluation.DeviceEvaluationFragment;
-import com.nano.activity.devicedata.evaluation.DeviceEvaluationTable;
-import com.nano.activity.devicedata.mark.MarkEventActivity;
-import com.nano.activity.devicedata.mark.MarkEventUtil;
-import com.nano.activity.login.LoginActivity;
 import com.nano.common.logger.Logger;
-import com.nano.common.threadpool.ScheduleUtils;
-import com.nano.common.threadpool.ThreadPoolUtils;
-import com.nano.common.util.SimpleDialog;
 import com.nano.common.util.ToastUtil;
-import com.nano.datacollection.CollectionStatusEnum;
-import com.nano.device.DeviceEnum;
-import com.nano.device.DeviceUtil;
-import com.nano.device.MedicalDevice;
 import com.nano.http.HttpHandler;
-import com.nano.http.HttpManager;
 import com.nano.http.HttpMessage;
 import com.sdsmdg.tastytoast.TastyToast;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Description: 基于区块链的医疗数据管理界面
@@ -106,7 +66,6 @@ public class DataManageActivity extends AppCompatActivity implements NavigationV
         // 侧边导航栏的布局
         NavigationView navigationView = findViewById(R.id.nav_view_data_manage);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
 
 
@@ -129,10 +88,6 @@ public class DataManageActivity extends AppCompatActivity implements NavigationV
     @SuppressLint("SetTextI18n")
     @Override
     public void handleSuccessfulHttpMessage(HttpMessage message) {
-        // 根据响应号进行处理
-        switch (message.getCode()) {
-
-        }
 
     }
 

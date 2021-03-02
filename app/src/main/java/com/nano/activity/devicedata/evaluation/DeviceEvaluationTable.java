@@ -21,7 +21,7 @@ public class DeviceEvaluationTable {
     /**
      * 手术场次号
      */
-    private int operationNumber = AppStatic.operationNumber;
+    private int collectionNumber;
 
     /**
      * 评价的唯一序号

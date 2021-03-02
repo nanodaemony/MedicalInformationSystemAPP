@@ -8,13 +8,13 @@
 
     <!--这里可以参考如何加图标的-->
 
-<!--    <item-->
-<!--        android:id="@+id/action_log_info"-->
-<!--        android:orderInCategory="100"-->
-<!--        android:title="日志信息"-->
-<!--        android:icon="@mipmap/message"-->
-<!--        app:showAsAction="always"-->
-<!--        />-->
+    <item
+        android:id="@+id/action_collection_help"
+        android:orderInCategory="100"
+        android:title="帮助"
+        android:icon="@mipmap/help"
+        app:showAsAction="always"
+        />
 
 <!--    <item-->
 <!--        android:id="@+id/action_change_mark_mode"-->

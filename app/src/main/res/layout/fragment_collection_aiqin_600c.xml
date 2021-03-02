@@ -20,99 +20,23 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <com.daimajia.swipe.SwipeLayout
-                android:id="@+id/device_collection_swiplayout"
+            <ImageView
+                android:id="@+id/device_collection_device_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/device_aiqin_egos_600c" />
+
+            <TextView
+                android:id="@+id/device_collection_control_message"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <!--侧滑后底部的框-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/device_collection_abandon"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:gravity="center"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_height="0dp">-->
-<!--                        <ImageView-->
-<!--                            android:layout_width="40dp"-->
-<!--                            android:layout_height="40dp"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            android:src="@mipmap/collection_abandon"-->
-<!--                            />-->
-<!--                        <TextView-->
-<!--                            android:text="放弃采集"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"/>-->
-<!--                    </LinearLayout>-->
-
-                    <LinearLayout
-                        android:id="@+id/device_collection_stop"
-                        android:visibility="gone"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/collection_stop"
-                            />
-                        <TextView
-                            android:text="停止采集"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/device_collection_start"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_height="0dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:src="@mipmap/collection_start" />
-                        <TextView
-                            android:text="开始采集"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!--仪器图片-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/collection_device_image"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginStart="5dp"
-                        android:src="@mipmap/device_aiqin_egos_600c" />
-                </LinearLayout>
-
-            </com.daimajia.swipe.SwipeLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="点击开始采集"
+                android:textSize="12sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <!--这是右边部分的信息框 占比5-->
