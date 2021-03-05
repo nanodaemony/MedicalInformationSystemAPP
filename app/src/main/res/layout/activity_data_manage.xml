@@ -28,19 +28,409 @@
         <!--可能需要修改这一部分的高度值来满足界面需求-->
         <ScrollView
             android:layout_width="match_parent"
+            android:scrollbarSize="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="4dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!--展示区块链信息的卡片-->
+                <android.support.design.card.MaterialCardView
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    >
+                </android.support.design.card.MaterialCardView>
 
+
+                <!--请求医疗数据时弹出的信息框-->
+                <android.support.design.card.MaterialCardView
+                    android:visibility="gone"
+                    android:id="@+id/data_manage_card_request_medical_data"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <!--输入伪身份ID的框-->
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:background="@drawable/frame_autofill_edittext"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/data_manage_edit_text_input_request_data_pid"
+                                android:layout_width="match_parent"
+                                android:layout_height="36dp"
+                                android:hint="请输入请求数据方的伪身份ID"
+                                android:textSize="12sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+
+                        <!--进行数据处理的按钮-->
+                        <android.support.design.button.MaterialButton
+                            android:id="@+id/data_manage_btn_request_data"
+                            style="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1.5"
+                            android:background="@android:color/holo_blue_bright"
+                            android:gravity="center"
+                            android:padding="1dp"
+                            android:text="请求数据"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                            android:textColor="@color/default_back_stroke_color"
+                            android:textSize="15sp"
+                            android:visibility="visible"
+                            app:rippleColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--处理医疗数据请求时弹出的信息框-->
+                <android.support.design.card.MaterialCardView
+                    android:visibility="visible"
+                    android:id="@+id/data_manage_card_handle_medical_data_request"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="数据分享请求"
+                            android:textColor="#03A9F4"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="数据请求方PID: "
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/data_manage_text_view_request_receiver_pid"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="HDJK1780ASBC8912"
+                                android:textColor="#3F51B5"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="请求数据TID: "
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/data_manage_text_view_request_tid"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="13A21378B"
+                                android:textColor="#3F51B5"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/data_manage_list_view_do_data_share_log"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/frame_content_box_small_width"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                        <!--处理数据分享请求的按钮-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal"
+                            >
+                            <!--忽略-->
+                            <android.support.design.button.MaterialButton
+                                android:id="@+id/data_manage_btn_handle_data_sharing_request_no"
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="right"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_weight="1"
+                                android:background="@color/cardview_dark_background"
+                                android:gravity="center"
+                                android:padding="1dp"
+                                android:text="拒绝分享"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                                android:textColor="@color/default_back_stroke_color"
+                                android:textSize="15sp"
+                                android:visibility="visible"
+                                app:backgroundTint="#9F9A9A"
+                                app:rippleColor="@android:color/white" />
+
+                            <!--答应数据分享-->
+                            <android.support.design.button.MaterialButton
+                                android:id="@+id/data_manage_btn_handle_data_sharing_request_yes"
+                                style="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="right"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_weight="1"
+                                android:background="@android:color/holo_blue_bright"
+                                android:gravity="center"
+                                android:padding="1dp"
+                                android:text="同意分享"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                                android:textColor="@color/default_back_stroke_color"
+                                android:textSize="15sp"
+                                android:visibility="visible"
+                                app:rippleColor="@android:color/white" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--接收方医疗数据请求结果弹出的信息框-->
+                <android.support.design.card.MaterialCardView
+                    android:visibility="visible"
+                    android:id="@+id/data_manage_card_handle_medical_data_request_result"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="数据分享请求结果"
+                            android:textColor="#03A9F4"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="数据分享方PID: "
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/data_manage_text_view_request_sender_pid"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="HDJK1780ASBC8912"
+                                android:textColor="#3F51B5"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_margin="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="请求数据TID: "
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/data_manage_text_view_request_data_tid"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="13A21378B"
+                                android:textColor="#3F51B5"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+
+                        <!--处理数据分享请求的按钮-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal"
+                            >
+                            <!--忽略-->
+<!--                            <android.support.design.button.MaterialButton-->
+<!--                                android:id="@+id/data_manage_btn_handle_data_sharing_request_no"-->
+<!--                                style="@style/Base.TextAppearance.AppCompat.Medium"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                android:layout_gravity="right"-->
+<!--                                android:layout_marginStart="20dp"-->
+<!--                                android:layout_marginEnd="20dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:background="@color/cardview_dark_background"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="1dp"-->
+<!--                                android:text="拒绝分享"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"-->
+<!--                                android:textColor="@color/default_back_stroke_color"-->
+<!--                                android:textSize="15sp"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:backgroundTint="#9F9A9A"-->
+<!--                                app:rippleColor="@android:color/white" />-->
+
+<!--                            &lt;!&ndash;答应数据分享&ndash;&gt;-->
+<!--                            <android.support.design.button.MaterialButton-->
+<!--                                android:id="@+id/data_manage_btn_handle_data_sharing_request_yes"-->
+<!--                                style="@style/Base.TextAppearance.AppCompat.Medium"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                android:layout_gravity="right"-->
+<!--                                android:layout_marginStart="20dp"-->
+<!--                                android:layout_marginEnd="20dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:background="@android:color/holo_blue_bright"-->
+<!--                                android:gravity="center"-->
+<!--                                android:padding="1dp"-->
+<!--                                android:text="同意分享"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"-->
+<!--                                android:textColor="@color/default_back_stroke_color"-->
+<!--                                android:textSize="15sp"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:rippleColor="@android:color/white" />-->
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </android.support.design.card.MaterialCardView>
+
+
+                <!--展示历史医疗数据的列表-->
+                <ListView
+                    android:id="@+id/data_manage_list_view_history_medical_data"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+
+                    />
+
+                <!--展示数据使用信息的列表-->
+                <ListView
+                    android:id="@+id/data_manage_list_view_medical_data_usage_list"
+                    android:background="@drawable/frame_content_box_small_width"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    />
             </LinearLayout>
 
         </ScrollView>
+
+
+
+
+        <!--进行数据分享的按钮-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            >
+            <!--进行数据处理的按钮-->
+            <android.support.design.button.MaterialButton
+                android:id="@+id/data_manage_btn_handle_data_sharing_request"
+                android:layout_gravity="right"
+                android:visibility="visible"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="分享请求(0)"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+                android:textColor="@color/default_back_stroke_color"
+                android:textSize="15sp"
+                app:rippleColor="@android:color/white" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -88,6 +88,18 @@ public enum ServerPathEnum {
      */
     GET_FILE_STORAGE_URL("/eval/oss/get-file-storage-url"),
 
+
+    /**
+     * 用户注册
+     */
+    USER_REGISTER("/eval/patientchannel/register-user"),
+
+
+    /**
+     * 用户登录
+     */
+    USER_LOGIN("/eval/patientchannel/user-login"),
+
     ;
     @Getter
     String path;

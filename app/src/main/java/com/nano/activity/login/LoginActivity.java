@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.nano.R;
 import com.nano.WorkingModeEnum;
 import com.nano.activity.datamanage.DataManageActivity;
 import com.nano.activity.heartblood.HeartBloodActivity;
 import com.nano.common.logger.Logger;
 import com.nano.AppStatic;
+import com.nano.common.threadpool.ThreadPoolUtils;
+import com.nano.common.threadpool.core.TaskExecutor;
+import com.nano.common.util.PersistUtil;
 import com.nano.common.util.SimpleDialog;
 import com.nano.common.util.ToastUtil;
 import com.nano.http.HttpHandler;
@@ -26,6 +31,8 @@ import com.nano.http.HttpManager;
 import com.nano.activity.devicedata.healthrecord.HealthRecordActivity;
 import com.nano.common.logger.LoggerFactory;
 import com.nano.http.ServerPathEnum;
+import com.nano.http.entity.CommonResult;
+import com.nano.http.entity.ParamMedical;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.File;
@@ -36,6 +43,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import cn.hutool.http.HttpUtil;
 
 
 /**
@@ -89,24 +98,98 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
             String userName = edUserName.getText().toString();
             // 登录密码
             String password = edPassword.getText().toString();
+
+            // 进行登录
+            ThreadPoolUtils.executeNormalTask(() -> {
+                ServerPathEnum pathEnum = ServerPathEnum.USER_LOGIN;
+                String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                TaskExecutor.executeHttpTask(() -> {
+                    try {
+                        logger.info("用户登录.");
+                        String res = HttpUtil.post(path, JSON.toJSONString(new ParamMedical(userName, password)));
+                        logger.info(res);
+                        CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                        if (commonResult != null && commonResult.getCode() == 200) {
+                            logger.info("用户登录:" + commonResult.getData());
+
+                            runOnUiThread(() -> {
+                                if (btnDataManage.isChecked()) {
+                                    Intent intent = new Intent(LoginActivity.this, DataManageActivity.class);
+                                    startActivity(intent);
+                                    AppStatic.workingMode = WorkingModeEnum.DATA_MANAGEMENT;
+                                } else if (btnHeartAndBloodCollection.isChecked()) {
+                                    Intent intent = new Intent(LoginActivity.this, HeartBloodActivity.class);
+                                    startActivity(intent);
+                                    AppStatic.workingMode = WorkingModeEnum.HEART_BLOOD;
+                                } else if (btnDeviceDataCollection.isChecked()) {
+                                    Intent intent = new Intent(LoginActivity.this, HealthRecordActivity.class);
+                                    startActivity(intent);
+                                    AppStatic.workingMode = WorkingModeEnum.DEVICE_DATA;
+                                }
+                            });
+
+                        } else {
+                            runOnUiThread(() -> ToastUtil.toastWarn(this, "登录失败..."));
+                        }
+                    } catch (Exception e) {
+                        runOnUiThread(() -> ToastUtil.toastWarn(this, "登录失败..."));
+                    }
+                });
+
+            });
+
             // 校验用户名和密码
             if (verifyUser(userName, password)) {
-                if (btnDataManage.isChecked()) {
-                    Intent intent = new Intent(LoginActivity.this, DataManageActivity.class);
-                    startActivity(intent);
-                    AppStatic.workingMode = WorkingModeEnum.DATA_MANAGEMENT;
-                } else if (btnHeartAndBloodCollection.isChecked()) {
-                    Intent intent = new Intent(LoginActivity.this, HeartBloodActivity.class);
-                    startActivity(intent);
-                    AppStatic.workingMode = WorkingModeEnum.HEART_BLOOD;
-                } else if (btnDeviceDataCollection.isChecked()) {
-                    Intent intent = new Intent(LoginActivity.this, HealthRecordActivity.class);
-                    startActivity(intent);
-                    AppStatic.workingMode = WorkingModeEnum.DEVICE_DATA;
-                }
+
             } else {
                 ToastUtil.toast(getApplicationContext(), "用户名或密码错误", TastyToast.ERROR);
             }
+
+        });
+
+        // 初始加载上次的信息
+        edUserName.setText(PersistUtil.getStringValue("PID"));
+        edPassword.setText(PersistUtil.getStringValue("Password"));
+
+        // 注册按钮
+        Button btnRegister = findViewById(R.id.login_button_register);
+        btnRegister.setOnClickListener(view -> {
+            // 获取用户名与密码
+            String userName = edUserName.getText().toString().trim();
+            String password = edPassword.getText().toString().trim();
+            if ("".equals(userName) || "".equals(password)) {
+                ToastUtil.toastWarn(this, "注册时请输入完整的用户名与密码!!!");
+                return;
+            }
+            // 进行注册
+            ThreadPoolUtils.executeNormalTask(() -> {
+                ServerPathEnum pathEnum = ServerPathEnum.USER_REGISTER;
+                String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                TaskExecutor.executeHttpTask(() -> {
+                    try {
+                        logger.info("用户注册.");
+                        String res = HttpUtil.post(path, JSON.toJSONString(new ParamMedical(1, userName, password)));
+                        logger.info(res);
+                        CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                        if (commonResult != null && commonResult.getCode() == 200) {
+                            logger.info("用户注册:" + commonResult.getData());
+                            runOnUiThread(() -> ToastUtil.toastSuccess(this, "您已注册成功,点击登录即可登录."));
+                            // 注册成功之后将上述信息缓存到本地
+                            PersistUtil.putStringValue("UserName", userName);
+                            PersistUtil.putStringValue("Password", password);
+                            PersistUtil.putStringValue("PID", commonResult.getData());
+                            // 更新PID
+                            AppStatic.patientPseudoId = commonResult.getData();
+                            edUserName.setText(commonResult.getData());
+                        } else {
+                            runOnUiThread(() -> ToastUtil.toastSuccess(this, "注册失败..."));
+                        }
+                    } catch (Exception e) {
+                        runOnUiThread(() -> ToastUtil.toastSuccess(this, "注册失败..."));
+                    }
+                });
+
+            });
 
         });
 

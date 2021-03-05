@@ -46,7 +46,7 @@ public class AppStatic {
     /**
      * 服务器默认路径(修改这个即可)
      */
-    public static ServerIpEnum serverIpEnum = ServerIpEnum.LOCAL_WIFI;
+    public static ServerIpEnum serverIpEnum = ServerIpEnum.LOCAL;
 
 
     /**
@@ -115,7 +115,10 @@ public class AppStatic {
     /**
      * 伪身份ID
      */
-    public static String pseudoId = "8912098GHSAIOJ87";
+    public static String patientPseudoId = "8912098GHSAIOJ87";
+    public static String receiverPseudoId = "HDJK1780ASBC8912";
+    public static String doctorPseudoId = "21435AJS328H23F5";
+
 
     /**
      * 治疗ID号

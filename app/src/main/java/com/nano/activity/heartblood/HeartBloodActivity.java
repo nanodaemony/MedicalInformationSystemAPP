@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,7 +19,11 @@ import com.nano.R;
 import com.nano.common.logger.Logger;
 import com.nano.common.threadpool.ThreadPoolUtils;
 import com.nano.common.threadpool.core.TaskExecutor;
+import com.nano.common.util.SimpleDialog;
 import com.nano.common.util.ToastUtil;
+import com.nano.datacollection.CollectionStatusEnum;
+import com.nano.device.DeviceUtil;
+import com.nano.device.MedicalDevice;
 import com.nano.http.ServerPathEnum;
 import com.nano.http.entity.CommonResult;
 
@@ -307,7 +312,7 @@ public class HeartBloodActivity extends AppCompatActivity {
                 dataEntity.setTimestamp(System.currentTimeMillis());
                 dataEntity.setDataSaveUrl(fileUrl);
                 dataEntity.setDataType("PHR");
-                dataEntity.setPatientPseudonymId(AppStatic.pseudoId);
+                dataEntity.setPatientPseudonymId(AppStatic.patientPseudoId);
                 refreshDataUploadLogList("计算数据摘要...");
                 String messageDigest = getMessageDigest(loadDataFromFile("HeartBloodEncryption" + currentCollectionNumber + ".txt"));
                 refreshDataUploadLogList("数据摘要: " + messageDigest);
@@ -316,9 +321,32 @@ public class HeartBloodActivity extends AppCompatActivity {
                 String patientSignature = getPatientSignature(messageDigest);
                 refreshDataUploadLogList("数据签名: " + patientSignature);
                 dataEntity.setTreatmentId(AppStatic.treatmentId);
+                // 这里构造完成准备上链
+                String jsonString = JSON.toJSONString(dataEntity);
 
+                refreshDataUploadLogList("数据上传区块链中...");
+                // TODO: 数据发送到服务器上完成上链
 
+                // 等待上链完成
+                refreshDataUploadLogList("数据上链完成!!!");
 
+                SimpleDialog.show(this, "上传完成", "您的数据已经完成处理并上传至区块链网络!!!", R.mipmap.post_success);
+
+                // 这里弹出确定完成的弹窗，然后回到主页
+                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                        .setTitle("上传完成")
+                        .setMessage("您的数据已经完成处理并上传至区块链网络!!!")
+                        .setIcon(R.mipmap.post_success)
+                        //添加"Yes"按钮
+                        .setPositiveButton("确定", (dialogInterface, i) -> {
+                            finish();
+                        })
+                        // 添加取消
+                        .setNegativeButton("取消", (dialogInterface, i) -> {
+                            finish();
+                        })
+                        .create();
+                alertDialog.show();
             }
 
 
@@ -332,8 +360,6 @@ public class HeartBloodActivity extends AppCompatActivity {
 //        });
 //
 //        logger.info("文件URL:" + getFileStorageUrlFromServer("Test.txt"));
-
-
 
     }
 

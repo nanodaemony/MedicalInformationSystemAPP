@@ -11,6 +11,8 @@ import lombok.Getter;
  */
 public enum ServerIpEnum {
 
+    LOCAL("172.20.29.67", 10086),
+
     /**
      * 本地环境使用4G路由器
      */

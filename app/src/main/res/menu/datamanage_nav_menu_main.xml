@@ -8,8 +8,6 @@
             android:icon="@mipmap/message"
             android:title="   工作信息"/>
 
-
-
     </group>
 
     <item android:title="其他">
