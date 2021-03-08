@@ -226,13 +226,12 @@
         <!--数据上传日志信息框-->
         <ListView
             android:id="@+id/heart_blood_data_upload_log"
-            android:visibility="gone"
             android:layout_margin="10dp"
+            android:padding="15dp"
             android:background="@drawable/frame_content_box_small_width"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-
+            android:layout_weight="0.5"/>
 
         <TextView
             android:layout_width="match_parent"

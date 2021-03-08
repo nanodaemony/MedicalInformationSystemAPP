@@ -5,6 +5,8 @@
  */
 package com.nano.share;
 
+import com.alibaba.fastjson.JSON;
+
 import java.math.BigInteger;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -35,7 +37,6 @@ public class Encryption {
     public MessageEntity encryptMessageByAes(String message) throws NoSuchAlgorithmException {
         // AES Symmetric Key Generation and Encryption of Plaintext Message
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         random.setSeed(pwd.getBytes());
         keyGen.init(128, random);
@@ -54,13 +55,19 @@ public class Encryption {
      * @param messageEntity 消息体
      */
     public MessageEntity encryptKeyByRsa(MessageEntity messageEntity) {
+
+        JSON.toJSONString(messageEntity);
+
         // 对消息体内的AES对应的大数进行加密
         BigInteger key = rsa.encrypt(messageEntity.getBigIntKey());
+        System.out.println("加密后的AES秘钥:" + key);
+        JSON.toJSONString(messageEntity);
         // 给原始消息体设置用RSA加密后的AES秘钥
         messageEntity.setKey(key);
         // 返回消息体
         return messageEntity;
     }
+
 
     /**
      * RSA解密AES秘钥

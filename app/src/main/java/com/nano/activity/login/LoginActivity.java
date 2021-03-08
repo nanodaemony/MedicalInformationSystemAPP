@@ -1,8 +1,8 @@
 package com.nano.activity.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,16 +33,17 @@ import com.nano.common.logger.LoggerFactory;
 import com.nano.http.ServerPathEnum;
 import com.nano.http.entity.CommonResult;
 import com.nano.http.entity.ParamMedical;
+import com.nano.share.rsa.RsaUtils;
 import com.sdsmdg.tastytoast.TastyToast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 import cn.hutool.http.HttpUtil;
 
@@ -72,6 +73,8 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
     private RadioButton btnDataManage;
 
     private HttpManager httpManager = new HttpManager(LoginActivity.this);
+
+    private ImageView ivRegisterDoctor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +131,8 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
                                 }
                             });
 
+                            logger.info(AppStatic.user.toString());
+
                         } else {
                             runOnUiThread(() -> ToastUtil.toastWarn(this, "登录失败..."));
                         }
@@ -147,9 +152,30 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
 
         });
 
+
+
+
+//        // 生成模拟文件到本地
+//        ThreadPoolUtils.executeNormalTask(() -> {
+//
+//            StringBuilder data = new StringBuilder();
+//            for (int i = 0; i < 10000; i++) {
+//                data.append("@1@324@34@324#32#78#78#87").append(System.currentTimeMillis()).append("\n");
+//                if (i % 10000 == 0) {
+//                    logger.info(i + "");
+//                }
+//            }
+//            saveDataToFile("Test1234.txt", data.toString());
+//            logger.info("长度:" + data.toString().length());
+//        });
+//
+
         // 初始加载上次的信息
         edUserName.setText(PersistUtil.getStringValue("PID"));
+        AppStatic.user.setPid(PersistUtil.getStringValue("PID"));
         edPassword.setText(PersistUtil.getStringValue("Password"));
+
+
 
         // 注册按钮
         Button btnRegister = findViewById(R.id.login_button_register);
@@ -173,19 +199,24 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
                         CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
                         if (commonResult != null && commonResult.getCode() == 200) {
                             logger.info("用户注册:" + commonResult.getData());
-                            runOnUiThread(() -> ToastUtil.toastSuccess(this, "您已注册成功,点击登录即可登录."));
+                            runOnUiThread(() -> {
+                                ToastUtil.toastSuccess(this, "您已注册成功,点击登录即可登录.");
+                                edUserName.setText(commonResult.getData());
+                            });
                             // 注册成功之后将上述信息缓存到本地
                             PersistUtil.putStringValue("UserName", userName);
                             PersistUtil.putStringValue("Password", password);
                             PersistUtil.putStringValue("PID", commonResult.getData());
                             // 更新PID
-                            AppStatic.patientPseudoId = commonResult.getData();
-                            edUserName.setText(commonResult.getData());
+                            AppStatic.pid = commonResult.getData();
+                            AppStatic.user.setPid(commonResult.getData());
+
                         } else {
-                            runOnUiThread(() -> ToastUtil.toastSuccess(this, "注册失败..."));
+                            runOnUiThread(() -> ToastUtil.toastWarn(this, "用户注册失败..."));
                         }
                     } catch (Exception e) {
-                        runOnUiThread(() -> ToastUtil.toastSuccess(this, "注册失败..."));
+                        e.printStackTrace();
+                        runOnUiThread(() -> ToastUtil.toastError(this, "注册失败..."));
                     }
                 });
 
@@ -193,10 +224,97 @@ public class LoginActivity extends AppCompatActivity implements HttpHandler {
 
         });
 
+        // 注册医生的PID
+        ivRegisterDoctor = findViewById(R.id.login_image_register_doctor);
+        ivRegisterDoctor.setOnClickListener(view -> {
+            // 进行注册
+            ThreadPoolUtils.executeNormalTask(() -> {
+                ServerPathEnum pathEnum = ServerPathEnum.USER_REGISTER;
+                String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                TaskExecutor.executeHttpTask(() -> {
+                    try {
+                        logger.info("注册医生.");
+                        String res = HttpUtil.post(path, JSON.toJSONString(new ParamMedical(1, "111" + System.currentTimeMillis(), "password")));
+                        logger.info(res);
+                        CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                        if (commonResult != null && commonResult.getCode() == 200) {
+                            logger.info("注册医生:" + commonResult.getData());
+                            // 注册成功之后将上述信息缓存到本地
+                            PersistUtil.putStringValue("PIDDoctor", commonResult.getData());
+                            AppStatic.doctorPseudoId = commonResult.getData();
+                        } else {
+                        }
+                    } catch (Exception e) {
+                    }
+                });
+
+            });
+        });
+
         // 忘记密码
         tvForgetPassword.setOnClickListener(v -> SimpleDialog.show(LoginActivity.this, "忘记密码", "请联系QQ：1174520425", R.mipmap.help));
     }
 
+
+
+
+    /**
+     * 存储数据到文件
+     *
+     * @param fileName 文件名 如 121212121.txt(无需路径)
+     * @param data     数据
+     */
+    public void saveDataToFile(String fileName, String data) {
+        // 通过线程池存储数据到文件
+        ThreadPoolUtils.executeNormalTask(() -> {
+            FileOutputStream out = null;
+            BufferedWriter writer = null;
+            try {
+                out = openFileOutput(fileName, Context.MODE_APPEND);
+                writer = new BufferedWriter(new OutputStreamWriter(out));
+                writer.write(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * 从文件加载数据
+     */
+    public String loadDataFromFile(String fileName) {
+        FileInputStream in = null;
+        BufferedReader reader = null;
+        StringBuilder builder = new StringBuilder();
+        try {
+            in = openFileInput(fileName);
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return builder.toString();
+    }
 
     /**
      * 判断用户是否合格

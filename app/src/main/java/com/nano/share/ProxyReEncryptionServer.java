@@ -27,7 +27,6 @@ public class ProxyReEncryptionServer extends Encryption {
      * @return 消息体
      */
     public MessageEntity reEncrypt(MessageEntity messageEntity, Encryption sender, Encryption receiver) {
-
         // 利用接受者的公钥 + 发送者的私钥生成代理重加密秘钥
         this.rsa.e = receiver.rsa.e.multiply(sender.rsa.d);
         // 获取Sender提供的会话秘钥
@@ -48,7 +47,7 @@ public class ProxyReEncryptionServer extends Encryption {
     public MessageEntity reEncrypt(MessageEntity messageEntity) {
 
         // 利用接受者的公钥 + 发送者的私钥生成代理重加密秘钥
-        this.rsa.e = messageEntity.getMidKey();
+        this.rsa.e = messageEntity.getConversionKey();
         // 获取Sender提供的会话秘钥
         BigInteger key = messageEntity.getBigIntKey();
         // 重新生成秘钥

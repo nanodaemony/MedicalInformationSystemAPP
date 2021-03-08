@@ -2,6 +2,7 @@ package com.nano.activity.devicedata.healthrecord;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.alibaba.fastjson.JSON;
 import com.nano.activity.devicedata.devicechoose.DeviceChooseActivity;
 import com.nano.activity.devicedata.healthrecord.watcher.AdmissionIdWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.HospitalOperationNumberWatcher;
@@ -22,6 +24,7 @@ import com.nano.activity.devicedata.healthrecord.watcher.PatientIdWatcher;
 import com.nano.activity.devicedata.healthrecord.watcher.PatientWeightWatcher;
 import com.nano.common.logger.Logger;
 import com.nano.AppStatic;
+import com.nano.common.threadpool.ThreadPoolUtils;
 import com.nano.common.util.ToastUtil;
 import com.nano.R;
 import com.nano.common.logger.LoggerFactory;
@@ -29,6 +32,10 @@ import com.sdsmdg.tastytoast.TastyToast;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -394,6 +401,29 @@ public class HealthRecordActivity extends Activity {
             } else {
                 // 验证输入之后进入仪器选择Activity
                 if (verifyInput()) {
+
+                    EmrEntity emrEntity = new EmrEntity();
+                    emrEntity.setPatientId("500281196003027281");
+                    emrEntity.setAdmissionId("A237892");
+                    emrEntity.setPatientAge("60");
+                    emrEntity.setPatientHeight("176cm");
+                    emrEntity.setPatientWeight("70kg");
+                    emrEntity.setPatientSex("男");
+                    emrEntity.setOperationName("胸腔镜下肺修补术");
+                    emrEntity.setHospitalOperationNumber("AS123890");
+                    emrEntity.setBeforeOperationDiagnosis("咳嗽3年,肺部病变");
+                    emrEntity.setOperationIsUrgent("否");
+                    emrEntity.setOperationASALevel("3级");
+                    emrEntity.setOperationHeartFunctionLevel("II级");
+                    emrEntity.setOperationLungFunctionLevel("3级");
+                    emrEntity.setOperationLiverFunctionLevel("A级");
+                    emrEntity.setOperationKidneyFunctionLevel("3级");
+                    emrEntity.setPastMedicalHistory("糖尿病,高血压病史4年,17年进行肾结石手术.");
+                    emrEntity.setSpecialDiseaseCase("糖尿病，高血压");
+
+                    // 缓存这个数据
+                    AppStatic.emrData = JSON.toJSONString(emrEntity);
+
                     // 记录日志
                     logger.info("术前EHR信息:" + collectionBasicInfoEntity.toString());
                     Intent intent = new Intent(HealthRecordActivity.this, DeviceChooseActivity.class);
@@ -402,6 +432,37 @@ public class HealthRecordActivity extends Activity {
             }
         });
 
+    }
+
+
+
+    /**
+     * 存储数据到文件
+     *
+     * @param fileName 文件名 如 121212121.txt(无需路径)
+     * @param data     数据
+     */
+    public void saveDataToFile(String fileName, String data) {
+        // 通过线程池存储数据到文件
+        ThreadPoolUtils.executeNormalTask(() -> {
+            FileOutputStream out = null;
+            BufferedWriter writer = null;
+            try {
+                out = openFileOutput(fileName, Context.MODE_APPEND);
+                writer = new BufferedWriter(new OutputStreamWriter(out));
+                writer.write(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -564,6 +625,28 @@ public class HealthRecordActivity extends Activity {
         collectionBasicInfoEntity.setPastMedicalHistory("无");
         collectionBasicInfoEntity.setSpecialDiseaseCase("高血压");
         logger.debug(collectionBasicInfoEntity.toString());
+
+        EmrEntity emrEntity = new EmrEntity();
+        emrEntity.setPatientId("500281196003027281");
+        emrEntity.setAdmissionId("A237892");
+        emrEntity.setPatientAge("60");
+        emrEntity.setPatientHeight("176cm");
+        emrEntity.setPatientWeight("70kg");
+        emrEntity.setPatientSex("男");
+        emrEntity.setOperationName("胸腔镜下肺修补术");
+        emrEntity.setHospitalOperationNumber("AS123890");
+        emrEntity.setBeforeOperationDiagnosis("咳嗽3年,肺部病变");
+        emrEntity.setOperationIsUrgent("否");
+        emrEntity.setOperationASALevel("3级");
+        emrEntity.setOperationHeartFunctionLevel("II级");
+        emrEntity.setOperationLungFunctionLevel("3级");
+        emrEntity.setOperationLiverFunctionLevel("A级");
+        emrEntity.setOperationKidneyFunctionLevel("3级");
+        emrEntity.setPastMedicalHistory("糖尿病,高血压病史4年,17年进行肾结石手术.");
+        emrEntity.setSpecialDiseaseCase("糖尿病，高血压");
+
+        // 缓存这个数据
+        AppStatic.emrData = JSON.toJSONString(emrEntity);
     }
 
 

@@ -2931,7 +2931,7 @@
 
             <!--开始/结束采集-->
             <android.support.design.chip.Chip
-                android:id="@+id/collection_error_log_button"
+                android:id="@+id/collection_upload_shr_data"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"

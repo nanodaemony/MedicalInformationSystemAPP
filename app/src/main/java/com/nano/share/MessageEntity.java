@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package com.nano.share;
+import android.util.Base64;
+
+import com.nano.share.rsa.Base64Utils;
 
 import java.math.BigInteger;
-import java.util.Base64;
-
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -18,6 +19,7 @@ import lombok.Data;
  */
 @Data
 public class MessageEntity {
+
 
     /**
      * 消息
@@ -45,15 +47,20 @@ public class MessageEntity {
     private BigInteger key;
 
     /**
-     * 由发送方生成的中间秘钥
+     * 由发送方生成的中间转换秘钥
      */
-    private BigInteger midKey;
+    private BigInteger conversionKey;
 
+
+    public MessageEntity() {
+    }
 
     public MessageEntity(String message, SecretKey key) {
         this.message = message;
         // 秘钥转换
-        this.key = new BigInteger(Base64.getEncoder().encodeToString(key.getEncoded()).getBytes());
+        String key1 =  Base64.encodeToString(key.getEncoded(), Base64.URL_SAFE);
+        System.out.println("Key1:" + key1);
+        this.key = new BigInteger(key1.getBytes());
     }
 
     public MessageEntity(String message, BigInteger key) {
@@ -66,19 +73,19 @@ public class MessageEntity {
     }
 
 
-    public BigInteger getMidKey() {
-        return midKey;
+    public BigInteger getConversionKey() {
+        return conversionKey;
     }
 
-    public void setMidKey(BigInteger midKey) {
-        this.midKey = midKey;
+    public void setConversionKey(BigInteger conversionKey) {
+        this.conversionKey = conversionKey;
     }
 
     /**
      * 将秘钥转换为大数
      */
     public void setKey(SecretKey key) {
-        this.key = new BigInteger(Base64.getEncoder().encodeToString(key.getEncoded()).getBytes());
+        this.key = new BigInteger(Base64.encode(key.getEncoded(), Base64.URL_SAFE));
     }
 
     public void setKey(BigInteger key) {
@@ -91,7 +98,7 @@ public class MessageEntity {
 
     public SecretKey getKey() {
         String keyString = new String(key.toByteArray());
-        byte[] decodedKey = Base64.getDecoder().decode(keyString);
+        byte[] decodedKey = Base64.decode(keyString, Base64.URL_SAFE);
         // Constructs a secret key from the given byte array 
         SecretKey secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         return secretKey;

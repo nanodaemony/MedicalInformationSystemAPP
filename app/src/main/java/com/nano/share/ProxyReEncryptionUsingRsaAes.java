@@ -48,7 +48,7 @@ public class ProxyReEncryptionUsingRsaAes {
 
             BigInteger midKey = receiver.rsa.e.multiply(sender.rsa.d);
 
-            senderMessage.setMidKey(midKey);
+            senderMessage.setConversionKey(midKey);
 
             // Re-Encryption代理重加密
             MessageEntity middleMessage = server.reEncrypt(senderMessage);

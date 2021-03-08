@@ -255,6 +255,14 @@
 
         </android.support.design.card.MaterialCardView>
 
+        <ListView
+            android:id="@+id/collection_data_upload_to_blockchain"
+            android:layout_margin="10dp"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+
 
         <!--底部按钮框-->
         <LinearLayout
@@ -287,24 +295,7 @@
                 app:rippleColor="@color/titleColorSelected"
                 tools:ignore="HardcodedText" />
 
-            <!--错误信息计数器-->
-            <android.support.design.chip.Chip
-                android:id="@+id/collection_error_log_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:checked="false"
-                android:text="错误信息(0)"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorAccent"
-                app:chipIconSize="12sp"
-                app:closeIcon="@mipmap/start"
-                app:closeIconEnabled="true"
-                app:closeIconTint="@color/colorAccent"
-                app:rippleColor="@color/dataFragmentDataBox"
-                tools:chipIconTint="@color/colorPrimaryDark" />
+
 
 
 <!--            &lt;!&ndash;专用评价&ndash;&gt;-->
@@ -348,6 +339,26 @@
                 app:closeIconTint="@color/colorAccent"
                 app:rippleColor="@color/titleColorSelected"
                 tools:ignore="HardcodedText" />
+
+            <!--错误信息计数器-->
+            <android.support.design.chip.Chip
+                android:id="@+id/collection_upload_shr_data"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="数据上链"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorAccent"
+                app:chipIconSize="12sp"
+                app:closeIcon="@mipmap/start"
+                app:closeIconEnabled="true"
+                app:closeIconTint="@color/colorAccent"
+                app:rippleColor="@color/dataFragmentDataBox"
+                tools:chipIconTint="@color/colorPrimaryDark" />
+
         </LinearLayout>
 
     </LinearLayout>

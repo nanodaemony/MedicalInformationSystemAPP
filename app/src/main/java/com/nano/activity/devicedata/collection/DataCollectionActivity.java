@@ -23,10 +23,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.nano.R;
+import com.nano.activity.ParamDataEntity;
 import com.nano.activity.devicedata.collection.interfaces.FragmentOperationHandler;
 import com.nano.activity.devicedata.evaluation.DeviceEvaluationFragment;
 import com.nano.activity.devicedata.evaluation.DeviceEvaluationTable;
@@ -36,6 +40,7 @@ import com.nano.common.threadpool.ThreadPoolUtils;
 import com.nano.activity.login.LoginActivity;
 import com.nano.activity.devicedata.mark.MarkEventUtil;
 import com.nano.common.util.SimpleDialog;
+import com.nano.datacollection.DeviceData;
 import com.nano.device.DeviceEnum;
 import com.nano.AppStatic;
 import com.nano.common.logger.Logger;
@@ -48,14 +53,21 @@ import com.nano.device.MedicalDevice;
 import com.nano.http.HttpHandler;
 import com.nano.http.HttpMessage;
 import com.nano.http.HttpManager;
+import com.nano.http.ServerPathEnum;
+import com.nano.http.entity.CommonResult;
+import com.nano.http.entity.ParamMedical;
+import com.nano.share.rsa.RsaUtils;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import cn.hutool.http.HttpUtil;
 
 
 /**
@@ -101,6 +113,11 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
      * 测试的布局
      */
     private MaterialCardView layoutTest;
+
+
+    private ListView lvDataUploadLog;
+    private ArrayAdapter<String> logAdapter;
+    private List<String> logList = new ArrayList<>();
 
 
     @Override
@@ -156,12 +173,8 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
             }
         }
 
-        // 展示错误日志
-        Chip btnErrorLog = findViewById(R.id.collection_error_log_button);
-        btnErrorLog.setOnClickListener(v -> {
-            // 弹出错误日志
-            showErrorLogDialog();
-        });
+
+
 
         // 添加标记事件
         Chip btnAddMarkEvent = findViewById(R.id.material_button_add_mark_info);
@@ -216,6 +229,92 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
         tvTestAiQinEgos600B.setOnClickListener(view -> DeviceUtil.getMedicalDevice(DeviceEnum.AI_QIN_EGOS600B.getDeviceCode()).parseAndUploadDeviceData(TestUtil.getTestData(DeviceEnum.AI_QIN_EGOS600B.getDeviceCode())));
         TextView tvTestAiQinEgos600C = findViewById(R.id.collection_textView_test_aiqin600c);
         tvTestAiQinEgos600C.setOnClickListener(view -> DeviceUtil.getMedicalDevice(DeviceEnum.AI_QIN_EGOS600C.getDeviceCode()).parseAndUploadDeviceData(TestUtil.getTestData(DeviceEnum.AI_QIN_EGOS600C.getDeviceCode())));
+
+
+        // 将采集的数据上传到区块链中
+        Chip btnUploadData = findViewById(R.id.collection_upload_shr_data);
+        btnUploadData.setOnClickListener(v -> {
+            for (MedicalDevice device : DeviceUtil.getUsedDeviceList()) {
+                // 说明都已经完成采集
+                if (device.getStatusEnum() == CollectionStatusEnum.FINISHED) {
+
+                    lvDataUploadLog.setVisibility(View.VISIBLE);
+
+                    refreshDataUploadLogList("开始进行数据上传...");
+                    refreshDataUploadLogList("处理EMR数据并上传...");
+                    // 加密EMR数据
+                    String emrEncryData = RsaUtils.encryptDataLong(AppStatic.emrData, AppStatic.user.getRsaKeyPair().getPublic());
+                    // 上传EMR数据
+                    ThreadPoolUtils.executeNormalTask(() -> {
+                        ServerPathEnum pathEnum = ServerPathEnum.UPLOAD_DATA_TO_OSS;
+                        String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                        try {
+                            logger.info("上传EMR数据.");
+                            ParamDataEntity entityEmr = new ParamDataEntity();
+                            entityEmr.setTimestamp(System.currentTimeMillis());
+                            entityEmr.setData(emrEncryData);
+                            entityEmr.setDataType("EMR");
+                            entityEmr.setTid(AppStatic.user.getTidEmr());
+                            entityEmr.setPatientPseudonymId(AppStatic.user.getPid());
+                            entityEmr.setDoctorPseudonymId(AppStatic.doctorPseudoId);
+                            String res = HttpUtil.post(path, JSON.toJSONString(entityEmr));
+                            logger.info("EMR响应:" + res);
+                            CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                            if (commonResult != null && commonResult.getCode() == 200) {
+                                logger.info("上传EMR数据成功:" + commonResult.getData());
+                                runOnUiThread(() -> refreshDataUploadLogList("EMR数据上链完成!"));
+                            } else {
+                                runOnUiThread(() -> ToastUtil.toastError(this, "EMR数据上传失败..."));
+                            }
+                        } catch (Exception e) {
+                            runOnUiThread(() -> ToastUtil.toastError(this, "EMR数据上传失败..."));
+                        }
+                    });
+                    refreshDataUploadLogList("处理SHR数据并上传...");
+                    // 加密SHR数据
+                    logger.info("SHR数据:" + AppStatic.deviceDataBuilder.toString().trim());
+                    String shrEncryData = RsaUtils.encryptDataLong("123123123", AppStatic.user.getRsaKeyPair().getPublic());
+                    ThreadPoolUtils.executeNormalTask(() -> {
+                        ServerPathEnum pathEnum = ServerPathEnum.UPLOAD_DATA_TO_OSS;
+                        String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                        try {
+                            logger.info("上传SHR数据.");
+                            ParamDataEntity entityShr = new ParamDataEntity();
+                            entityShr.setTimestamp(System.currentTimeMillis());
+                            entityShr.setData(shrEncryData);
+                            entityShr.setDataType("SHR");
+                            entityShr.setTid(AppStatic.user.getTidShr());
+                            entityShr.setPatientPseudonymId(AppStatic.user.getPid());
+                            entityShr.setDoctorPseudonymId(AppStatic.doctorPseudoId);
+                            String res = HttpUtil.post(path, JSON.toJSONString(entityShr));
+                            logger.info("SHR响应:" + res);
+                            CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                            if (commonResult != null && commonResult.getCode() == 200) {
+                                logger.info("上传ShR数据成功:" + commonResult.getData());
+                                runOnUiThread(() -> {
+                                    refreshDataUploadLogList("ShR数据上链完成!");
+                                    refreshDataUploadLogList("本次交易ID:" + commonResult.getData());
+                                });
+                            } else {
+                                runOnUiThread(() -> ToastUtil.toastError(this, "ShR数据上传失败..."));
+                            }
+                        } catch (Exception e) {
+                            runOnUiThread(() -> ToastUtil.toastError(this, "SHR数据上传失败..."));
+                        }
+                    });
+                    refreshDataUploadLogList("操作完成.");
+
+                } else {
+                    ToastUtil.toastWarn(this, "数据采集未完成,无法上传数据.");
+                }
+            }
+
+
+        });
+
+        // 数据上传日志
+        lvDataUploadLog = findViewById(R.id.collection_data_upload_to_blockchain);
+
     }
 
 
@@ -463,11 +562,11 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
                             DeviceEvaluationFragment evaluationFragment = new DeviceEvaluationFragment();
                             stopUnity.setEvaluationFragment(evaluationFragment);
                             // 传递仪器序号给Fragment
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("deviceCode", deviceCode);
-                            evaluationFragment.setArguments(bundle);
-                            replaceFragment(stopUnity.getDeviceLayoutIds(), evaluationFragment);
-                            fragmentTransaction.commit();
+//                            Bundle bundle = new Bundle();
+//                            bundle.putInt("deviceCode", deviceCode);
+//                            evaluationFragment.setArguments(bundle);
+//                            replaceFragment(stopUnity.getDeviceLayoutIds(), evaluationFragment);
+//                            fragmentTransaction.commit();
                         });
                     }
                 } catch (Exception e) {
@@ -478,7 +577,6 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
             // 上传仪器评价信息
             case AFTER_COLLECTION_EVALUATION_TABLE_ADD:
                 try {
-
                     String tableUniqueNumber = message.getData();
                     // 寻找满足评价表唯一号的所有信息
                     for (Map.Entry<Integer, DeviceUnity> entry : usedDeviceUnityMap.entrySet()) {
@@ -725,12 +823,12 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
     /**
      * 接收仪器数据的EventBus回调
      *
-     * @param message 仪器数据类
+     * @param deviceData 仪器数据类
      */
     @SuppressLint("SetTextI18n")
     @Subscribe
-    public void onEventMainThread(String message) {
-        // 暂时不用
+    public void onEventMainThread(DeviceData deviceData) {
+
     }
 
 
@@ -861,6 +959,18 @@ public class DataCollectionActivity extends AppCompatActivity implements Navigat
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(originLayout, targetFragment);
         transaction.commit();
+    }
+
+    /**
+     * 刷新数据上传事件列表日志
+     *
+     * @param data 数据
+     */
+    private void refreshDataUploadLogList(String data) {
+        logList.add(data);
+        logAdapter = new ArrayAdapter<>(DataCollectionActivity.this, R.layout.item_log_message, logList);
+        lvDataUploadLog.setAdapter(logAdapter);
+        lvDataUploadLog.setSelection(logList.size() - 1);
     }
 
     /**

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,16 +15,13 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.nano.AppStatic;
 import com.nano.R;
+import com.nano.activity.ParamDataEntity;
 import com.nano.common.logger.Logger;
 import com.nano.common.threadpool.ThreadPoolUtils;
-import com.nano.common.threadpool.core.TaskExecutor;
-import com.nano.common.util.SimpleDialog;
 import com.nano.common.util.ToastUtil;
-import com.nano.datacollection.CollectionStatusEnum;
-import com.nano.device.DeviceUtil;
-import com.nano.device.MedicalDevice;
 import com.nano.http.ServerPathEnum;
 import com.nano.http.entity.CommonResult;
+import com.nano.share.rsa.RsaUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,8 +45,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
 
 import cn.hutool.http.HttpUtil;
 
@@ -123,8 +117,6 @@ public class HeartBloodActivity extends AppCompatActivity {
      * 临时存放监测数据
      */
     private StringBuilder dataBuilder = new StringBuilder();
-    private StringBuilder heartDataBuilder = new StringBuilder();
-    private StringBuilder bloodDataBuilder = new StringBuilder();
 
     /**
      * 数据上传日志列表
@@ -174,7 +166,6 @@ public class HeartBloodActivity extends AppCompatActivity {
         // 采集控制按钮
         MaterialButton btnControl = findViewById(R.id.heart_blood_control_button);
         btnControl.setOnClickListener(view -> {
-
             try {
                 // 如果是等待状态
                 if (wholeCollectionStatus == PortableCollectionStatusEnum.WAITING) {
@@ -185,6 +176,7 @@ public class HeartBloodActivity extends AppCompatActivity {
                     // 修改状态显示
                     wholeCollectionStatus = PortableCollectionStatusEnum.COLLECTING;
                     tvWholeCollectionStatus.setText("数据采集中...");
+                    refreshLogList("数据采集中...");
                     tvWholeCollectionStatus.setTextColor(getColor(R.color.collectingData));
                     tvCollectionStatusBlood.setText("采集中");
                     tvCollectionStatusHeart.setText("采集中");
@@ -197,6 +189,7 @@ public class HeartBloodActivity extends AppCompatActivity {
                     // 修改状态显示
                     wholeCollectionStatus = PortableCollectionStatusEnum.FINISH;
                     tvWholeCollectionStatus.setText("数据完成采集");
+                    refreshLogList("数据完成采集");
                     tvWholeCollectionStatus.setTextColor(getColor(R.color.colorPrimary));
                     tvCollectionStatusBlood.setText("采集完成");
                     tvCollectionStatusHeart.setText("采集完成");
@@ -263,104 +256,43 @@ public class HeartBloodActivity extends AppCompatActivity {
             }
         });
 
+
         // 进行数据处理
         btnDoDataProccesing.setOnClickListener(view -> {
-
-            // TODO: 这里判断是否采集并将数据保存到了本地，如果没有则无法进行数据处理
             lvDataUploadLog.setVisibility(View.VISIBLE);
-            refreshDataUploadLogList("准备开始数据上链...");
-
-            // 1. 对文件进行加密处理
-            refreshDataUploadLogList("加载文件中...");
-            String data = loadDataFromFile(HeartBloodUtil.getNewFileName(currentCollectionNumber));
-            refreshDataUploadLogList("文件加载完成...");
-            refreshDataUploadLogList("初始文件大小:" + data.length() + "字节.");
-            refreshDataUploadLogList("开始进行数据加密...");
-            // 获取加密后的数据
-            String enData = doDataEncryption(data);
-            saveDataToFile("HeartBloodEncryption" + currentCollectionNumber + ".txt", enData);
-            refreshDataUploadLogList("数据加密完成");
-            refreshDataUploadLogList("加密后文件大小:" + enData.length() + "字节.");
-            // 2. 将文件上传到OSS服务器上，并得到文件存储的URL地址
-            refreshDataUploadLogList("上传数据至OSS服务器...");
+            refreshLogList("数据加密与上传中...");
+            // 测试用
+            dataBuilder.append("6666666666666666666666666666666666666666666666666666666666666666");
+            String phrData = RsaUtils.encryptDataLong(dataBuilder.toString().trim(), AppStatic.user.getRsaKeyPair().getPublic());
             ThreadPoolUtils.executeNormalTask(() -> {
-                // uploadFileToOss(getFileStreamPath("HeartBloodEncryption" + currentCollectionNumber + ".txt"), "http://192.168.8.120:10086/eval/oss/uploadAudio");
+                ServerPathEnum pathEnum = ServerPathEnum.UPLOAD_DATA_TO_OSS;
+                String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
+                try {
+                    logger.info("上传PHR数据.");
+                    ParamDataEntity entityPhr = new ParamDataEntity();
+                    entityPhr.setTimestamp(System.currentTimeMillis());
+                    entityPhr.setData(phrData);
+                    entityPhr.setDataType("PHR");
+                    entityPhr.setTid(AppStatic.user.getTidPhr());
+                    entityPhr.setPatientPseudonymId(AppStatic.user.getPid());
+                    String res = HttpUtil.post(path, JSON.toJSONString(entityPhr));
+                    logger.info(res);
+                    CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
+                    if (commonResult != null && commonResult.getCode() == 200) {
+                        logger.info("上传PHR数据成功:" + commonResult.getData());
+                        runOnUiThread(() -> {
+                            ToastUtil.toastSuccess(this, "PHR数据上传成功");
+                            refreshLogList("PHR数据上链完成!");
+                        });
+                    } else {
+                        runOnUiThread(() -> ToastUtil.toastError(this, "PHR数据上传失败..."));
+                    }
+                } catch (Exception e) {
+                    runOnUiThread(() -> ToastUtil.toastError(this, "PHR数据上传失败..."));
+                }
             });
 
-            // 上传之后获取文件存储的地址
-            String fileUrl = null;
-            int cnt = 5;
-            while (cnt-- > 0) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                refreshDataUploadLogList("查询上传状态...");
-                fileUrl = getFileStorageUrlFromServer("HeartBloodEncryption" + currentCollectionNumber + ".txt");
-                if (fileUrl.length() > 10) {
-                    refreshDataUploadLogList("文件已成功上传,URL: " + fileUrl);
-                    break;
-                } else {
-                    refreshDataUploadLogList("文件尚未上传完成,重试中...");
-                }
-            }
-            if (fileUrl.length() > 10) {
-                // 3. 请求后端进行数据上链
-                // 构造数据上传的数据结构
-                MedicalDataEntity dataEntity = new MedicalDataEntity();
-                dataEntity.setTimestamp(System.currentTimeMillis());
-                dataEntity.setDataSaveUrl(fileUrl);
-                dataEntity.setDataType("PHR");
-                dataEntity.setPatientPseudonymId(AppStatic.patientPseudoId);
-                refreshDataUploadLogList("计算数据摘要...");
-                String messageDigest = getMessageDigest(loadDataFromFile("HeartBloodEncryption" + currentCollectionNumber + ".txt"));
-                refreshDataUploadLogList("数据摘要: " + messageDigest);
-                refreshDataUploadLogList("计算数据签名...");
-                // 下面进行数据处理
-                String patientSignature = getPatientSignature(messageDigest);
-                refreshDataUploadLogList("数据签名: " + patientSignature);
-                dataEntity.setTreatmentId(AppStatic.treatmentId);
-                // 这里构造完成准备上链
-                String jsonString = JSON.toJSONString(dataEntity);
-
-                refreshDataUploadLogList("数据上传区块链中...");
-                // TODO: 数据发送到服务器上完成上链
-
-                // 等待上链完成
-                refreshDataUploadLogList("数据上链完成!!!");
-
-                SimpleDialog.show(this, "上传完成", "您的数据已经完成处理并上传至区块链网络!!!", R.mipmap.post_success);
-
-                // 这里弹出确定完成的弹窗，然后回到主页
-                AlertDialog alertDialog = new AlertDialog.Builder(this)
-                        .setTitle("上传完成")
-                        .setMessage("您的数据已经完成处理并上传至区块链网络!!!")
-                        .setIcon(R.mipmap.post_success)
-                        //添加"Yes"按钮
-                        .setPositiveButton("确定", (dialogInterface, i) -> {
-                            finish();
-                        })
-                        // 添加取消
-                        .setNegativeButton("取消", (dialogInterface, i) -> {
-                            finish();
-                        })
-                        .create();
-                alertDialog.show();
-            }
-
-
-
-
         });
-
-//        long time = System.currentTimeMillis();
-//        ThreadPoolUtils.executeNormalTask(() -> {
-//            uploadFileToOss(getFileStreamPath("Test.txt"), "http://192.168.8.120:10086/eval/oss/uploadAudio");
-//        });
-//
-//        logger.info("文件URL:" + getFileStorageUrlFromServer("Test.txt"));
-
     }
 
 
@@ -633,7 +565,6 @@ public class HeartBloodActivity extends AppCompatActivity {
             conn.setRequestProperty("Charset", CHARSET); // 设置编码
             conn.setRequestProperty("connection", "keep-alive");
             conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
-
             if (file != null) {
                 DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
                 StringBuffer sb = new StringBuffer();
@@ -659,6 +590,8 @@ public class HeartBloodActivity extends AppCompatActivity {
                 if (res == 200) {
                     logger.info("文件上传OSS成功...");
                     return true;
+                } else {
+                    logger.info("文件上传失败:" + res);
                 }
             }
         } catch (IOException e) {
@@ -666,56 +599,6 @@ public class HeartBloodActivity extends AppCompatActivity {
             return false;
         }
         return false;
-    }
-
-
-    /**
-     * 通过服务器获取文件存储地址
-     * @return 文件存储地址
-     */
-    private String getFileStorageUrlFromServer(String fileName) {
-        // "HeartBloodEncryption" + currentCollectionNumber + ".txt"
-        Future<String> future = TaskExecutor.taskExecutor.submit(new GetFileStorageThread(fileName));
-        try {
-            return future.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-
-    private class GetFileStorageThread implements Callable<String> {
-
-        private String fileName;
-
-        public GetFileStorageThread(String fileName) {
-            this.fileName = fileName;
-        }
-
-        @Override
-        public String call() throws Exception {
-
-            Thread.sleep(5000);
-
-            ServerPathEnum pathEnum = ServerPathEnum.GET_FILE_STORAGE_URL;
-            String path = AppStatic.serverIpEnum.getPath() + pathEnum.getPath();
-            try {
-                logger.info("获取文件存储地址: " + fileName);
-                logger.info("查询URL:" + path + "/" + fileName);
-                // 携带本次开始的采集场次号
-                String res = HttpUtil.get(path + "?filename=" + fileName);
-                logger.info(res);
-                CommonResult commonResult = JSON.parseObject(res, CommonResult.class);
-                if (commonResult != null) {
-                    return commonResult.getData();
-                } else {
-                    return "";
-                }
-            } catch (Exception e) {
-                return "";
-            }
-        }
     }
 
 
@@ -787,7 +670,7 @@ public class HeartBloodActivity extends AppCompatActivity {
      *
      * @param data 数据
      */
-    private void refreshDataUploadLogList(String data) {
+    private void refreshLogList(String data) {
         logList.add(data);
         logAdapter = new ArrayAdapter<>(HeartBloodActivity.this, R.layout.item_log_message, logList);
         lvDataUploadLog.setAdapter(logAdapter);
@@ -810,27 +693,4 @@ public class HeartBloodActivity extends AppCompatActivity {
         return fileList;
     }
 
-
-    /**
-     * 进行数据加密
-     */
-    private String doDataEncryption(String data) {
-
-        return data;
-    }
-
-
-    /**
-     * 获取数据消息摘要
-     * @param data 数据
-     * @return 消息摘要
-     */
-    private String getMessageDigest(String data) {
-        return data;
-    }
-
-
-    private String getPatientSignature(String messageDigest) {
-        return messageDigest;
-    }
 }

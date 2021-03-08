@@ -1,10 +1,14 @@
 package com.nano;
 
+import com.nano.activity.User;
+import com.nano.common.util.PersistUtil;
 import com.nano.device.MedicalDevice;
 import com.nano.activity.devicedata.healthrecord.CollectionBasicInfoEntity;
 import com.nano.common.logger.LogLevelEnum;
 import com.nano.common.util.CommonUtil;
 import com.nano.http.ServerIpEnum;
+import com.nano.share.Encryption;
+import com.nano.share.rsa.RsaUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +31,26 @@ public class AppStatic {
         macAddress = CommonUtil.getDeviceMacAddress();
         collectionBasicInfoEntity = new CollectionBasicInfoEntity();
         medicalDeviceMap = new HashMap<>();
+
+        // 生成用户
+        user = new User();
+        // 为用户生成数据分享密钥对
+        Encryption encryption = new Encryption();
+        user.setSharePublicKey(encryption.rsa.e);
+        user.setSharePrivateKey(encryption.rsa.d);
+        user.setPid(PersistUtil.getStringValue("PID"));
+        user.setEncryption(encryption);
+
+        // 产生数据加密RSA密钥对
+        user.setRsaKeyPair(RsaUtils.generateRSAKeyPair());
+        // 一来就生成TID给用户
+        user.setTidEmr("AS" + System.currentTimeMillis() + RsaUtils.encryptDataLong(System.currentTimeMillis() + "", user.getRsaKeyPair().getPublic()).substring(0, 10));
+        user.setTidPhr("AS" + System.currentTimeMillis() + RsaUtils.encryptDataLong(System.currentTimeMillis() + "", user.getRsaKeyPair().getPublic()).substring(0, 10));
+        user.setTidShr("AS" + System.currentTimeMillis() + RsaUtils.encryptDataLong(System.currentTimeMillis() + "", user.getRsaKeyPair().getPublic()).substring(0, 10));
     }
 
+
+    public static User user;
 
     // *************************** 需要进行配置的 *******************************************//
 
@@ -46,7 +68,7 @@ public class AppStatic {
     /**
      * 服务器默认路径(修改这个即可)
      */
-    public static ServerIpEnum serverIpEnum = ServerIpEnum.LOCAL;
+    public static ServerIpEnum serverIpEnum = ServerIpEnum.LOCAL_WIFI;
 
 
     /**
@@ -115,14 +137,27 @@ public class AppStatic {
     /**
      * 伪身份ID
      */
-    public static String patientPseudoId = "8912098GHSAIOJ87";
+    public static String pid = "8912098GHSAIOJ87";
     public static String receiverPseudoId = "HDJK1780ASBC8912";
     public static String doctorPseudoId = "21435AJS328H23F5";
 
 
     /**
-     * 治疗ID号
+     * 治疗ID号(打开APP就自动生成)
      */
-    public static String treatmentId = "13A21378B";
+    public static String treatmentId = "";
+
+
+    /**
+     * EMR数据
+     */
+    public static String emrData = "";
+
+    /**
+     * 缓存采集的仪器数据SHR
+     */
+    public static StringBuilder deviceDataBuilder = new StringBuilder();
+
+
 
 }

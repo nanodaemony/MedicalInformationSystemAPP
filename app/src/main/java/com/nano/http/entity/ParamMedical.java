@@ -33,6 +33,10 @@ public class ParamMedical implements Serializable {
 
     private String data2;
 
+
+    private boolean booleanValue;
+
+
     public ParamMedical(Integer code, String data, String data2) {
         this.code = code;
         this.data = data;

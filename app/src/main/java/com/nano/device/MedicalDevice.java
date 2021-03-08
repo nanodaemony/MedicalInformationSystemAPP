@@ -1,8 +1,12 @@
 package com.nano.device;
 
+import android.content.Context;
+
 import com.alibaba.fastjson.JSON;
+import com.nano.AppStatic;
 import com.nano.activity.devicedata.collection.interfaces.FragmentDataExchanger;
 import com.nano.activity.devicedata.evaluation.DeviceEvaluationTable;
+import com.nano.common.threadpool.ThreadPoolUtils;
 import com.nano.datacollection.DeviceData;
 import com.nano.datacollection.CollectionStatusEnum;
 import com.nano.common.logger.Logger;
@@ -12,6 +16,12 @@ import com.nano.http.HttpHandler;
 import com.nano.http.HttpMessage;
 import com.nano.http.HttpManager;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -205,7 +215,11 @@ public class MedicalDevice implements HttpHandler {
             // 进行仪器数据上传
             httpManager.postDeviceData(deviceData.getDeviceData());
             logger.debug("接收数据:" + deviceData.toString());
-            fragmentDataExchanger.updateReceiveCounterAndDeviceData(receiveCounter, deviceData.getDataObject());
+
+            // 通过消息巴士发送到采集界面进行存储到本地
+            AppStatic.deviceDataBuilder.append(JSON.toJSONString(deviceData)).append("\n");
+            logger.info("仪器数据：" + deviceData.toString());
+            // fragmentDataExchanger.updateReceiveCounterAndDeviceData(receiveCounter, deviceData.getDataObject());
         }
     }
 

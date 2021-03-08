@@ -100,6 +100,40 @@ public enum ServerPathEnum {
      */
     USER_LOGIN("/eval/patientchannel/user-login"),
 
+
+    /**
+     * 用户登录
+     */
+    UPLOAD_DATA_TO_OSS("/eval/patientchannel/upload-medical-data-to-blockchain"),
+
+    /**
+     * 查询全部历史医疗索引记录数据
+     */
+    QUERY_ALL_HISTORY_MEDICAL_INDEX_DATA("/eval/patientchannel/queryAllMedicalIndexDataByPid"),
+
+
+    /**
+     * 测试获取系统PID列表
+     */
+    TEST_GET_SYSTEM_PID_LIST("/eval/patientchannel/get-system-pid-list"),
+
+    /**
+     * 数据分享请求
+     */
+    DATA_SHARE_REQUEST("/eval/patientchannel/data-sharing"),
+
+
+    /**
+     * 通过PID查询数据使用记录
+     */
+    QUERY_DATA_USAGE_INFO_BY_PID("/eval/patientchannel/query-data-usage-info-by-pid"),
+
+
+    /**
+     * 查询区块链信息
+     */
+    QUERY_LEDGER_INFO("/eval/patientchannel/query-ledger-info"),
+
     ;
     @Getter
     String path;

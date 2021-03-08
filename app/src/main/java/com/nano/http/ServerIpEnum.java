@@ -11,7 +11,15 @@ import lombok.Getter;
  */
 public enum ServerIpEnum {
 
-    LOCAL("172.20.29.67", 10086),
+    /**
+     * 实验室服务器
+     */
+    LOCAL_SERVER("172.20.29.67", 10086),
+
+    /**
+     * 本地电脑
+     */
+    LOCAL_COMPUTER("172.20.29.106", 10086),
 
     /**
      * 本地环境使用4G路由器
